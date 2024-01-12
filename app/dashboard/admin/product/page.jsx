@@ -2,7 +2,7 @@
 import CreateProduct from "@/components/product/CreateProduct"
 import { useProductContext } from "@/context/ProductContext"
 
-const AddProduct = () => {
+const ProductsCreation = () => {
 
     const {updatingProduct} = useProductContext()
 
@@ -16,4 +16,4 @@ const AddProduct = () => {
     )
 }
 
-export default AddProduct;
+export default ProductsCreation;

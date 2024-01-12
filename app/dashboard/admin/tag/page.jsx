@@ -2,7 +2,7 @@
 import CreateTag from "@/components/tag/CreateTag"
 import TagsList from "@/components/tag/TagsList"
 
-const Categories = () => {
+const Tags = () => {
 
     return (
         <div className="container">
@@ -16,4 +16,4 @@ const Categories = () => {
     )
 }
 
-export default Categories
+export default Tags;
