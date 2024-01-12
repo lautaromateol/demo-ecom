@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
-import Category from "./category";
-import Tag from "./tag";
+import category from "@/models/category";
+import tag from "@/models/tag"
+
+const editionSchema = new mongoose.Schema({
+    console: { type: String, required: true },
+    stock: { type: Number, required: true },
+    price: { type: Number, required: true },
+    previousPrice: String,
+    image: {
+        secure_url: String,
+        public_id: String,
+    },
+});
 
 const ratingSchema = new mongoose.Schema({
     rating: {
@@ -17,15 +28,15 @@ const ratingSchema = new mongoose.Schema({
         ref: "User"
     },
 },
-{timestamps: true})
+    { timestamps: true })
 
 const likeSchema = new mongoose.Schema({
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 },
-{timestamps: true})
+    { timestamps: true })
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -48,22 +59,7 @@ const productSchema = new mongoose.Schema({
         maxLength: 2000,
         text: true
     },
-    price: {
-        type: Number,
-        required: true,
-        trim: true,
-        maxLength: 32,
-        validate: {
-            validator: function(value){
-                return value !== 0
-            },
-            message: "Price must be greater than 0."
-        }
-    },
-    previousPrice: Number,
-    color: String,
-    brand: String,
-    stock: Number,
+    developer: String,
     shipping: {
         type: Boolean,
         default: true
@@ -78,7 +74,7 @@ const productSchema = new mongoose.Schema({
             ref: "Tag"
         }
     ],
-    images: [
+    main_images: [
         {
             public_id: {
                 type: String,
@@ -91,11 +87,12 @@ const productSchema = new mongoose.Schema({
         }
     ],
     sold: {
-        type: Number,
-        default: 0
-    },
+    type: Number,
+    default: 0
+},
+    editions: [editionSchema],
     likes: [likeSchema],
     ratings: [ratingSchema]
-}, {timestamps: true})
+}, { timestamps: true })
 
 export default mongoose.models.Product || mongoose.model("Product", productSchema)
