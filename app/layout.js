@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react'
 import CategoryProvider from '@/context/CategoryContext'
 import TagProvider from '@/context/TagContext'
 import ProductProvider from '@/context/ProductContext'
+import EditionProvider from '@/context/EditionContext'
 import TopNav from '@/components/nav/TopNav'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,11 +18,13 @@ export default function RootLayout({ children }) {
         <CategoryProvider>
           <TagProvider>
             <ProductProvider>
+              <EditionProvider>
             <body className={inter.className}>
               <TopNav />
               <Toaster />
               {children}
             </body>
+              </EditionProvider>
             </ProductProvider>
           </TagProvider>
         </CategoryProvider>
