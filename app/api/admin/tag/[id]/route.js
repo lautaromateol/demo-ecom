@@ -4,6 +4,7 @@ import Tag from "@/models/tag";
 import slugify from "slugify";
 
 export async function PUT(req, {params}){
+    await dbConnect()
     const body = await req.json()
 
     try {
@@ -19,6 +20,7 @@ export async function PUT(req, {params}){
 }
 
 export async function DELETE(req, {params}){
+    await dbConnect()
 
     try {
         const deletedTag = await Tag.findByIdAndDelete(
