@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaShoppingCart } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
     return (
@@ -7,8 +8,8 @@ const ProductCard = ({ product }) => {
             <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                 <Link href={`/product/${product?.slug}`}>
                     <img src={product?.main_images?.[0]?.secure_url}
-                        alt="Product" className="h-80 w-72 object-center rounded-t-xl" />
-                    <div className="px-4 py-3 w-72">
+                        alt={product?.title} className="h-80 w-72 object-center rounded-t-xl" />
+                    <div className="px-4 py-3 w-full">
                         <span className="text-gray-400 mr-3 uppercase text-xs">{product?.developer}</span>
                         <p className="text-lg font-bold text-black truncate block capitalize">{product?.title}</p>
                         <div className="flex items-center">
@@ -17,10 +18,8 @@ const ProductCard = ({ product }) => {
                                 <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
                             </del>
                             <div className="ml-auto">
-                                <button className="bg-black px-2 py-1 uppercase text-white rounded-md">
-                                    <strong>
-                                        Add to Cart
-                                    </strong>
+                                <button className="text-2xl">
+                                       <FaShoppingCart/>
                                 </button>
                             </div>
                         </div>

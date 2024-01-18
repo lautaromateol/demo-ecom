@@ -9,7 +9,6 @@ const ProductsList = () => {
     const { products, currentPage, totalPages, fetchProducts, setUpdatingProduct } = useProductContext()
 
     const router = useRouter()
-    const pathname = usePathname()
     const searchParams = useSearchParams()
 
     const page = searchParams.get("page")

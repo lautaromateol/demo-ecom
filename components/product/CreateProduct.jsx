@@ -3,6 +3,7 @@ import { useProductContext } from "@/context/ProductContext";
 import { useCategoryContext } from "@/context/CategoryContext";
 import { useTagContext } from "@/context/TagContext";
 import { useEditionContext } from "@/context/EditionContext";
+import slugify from "slugify";
 
 const CreateProduct = () => {
 
@@ -23,7 +24,7 @@ const CreateProduct = () => {
     }, [])
 
     return (
-        <div className="my-5">
+        <div className="shadow-lg my-5 p-8">
             <input type="text" placeholder="Title"
                 className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
                 value={updatingProduct ? updatingProduct?.title : product?.title}
@@ -119,13 +120,15 @@ const CreateProduct = () => {
 
                                 const editionConsole = ed.console
 
+                                const editionSlug = slugify(editionConsole)
+
                                 let selectedEditions = updatingProduct ?
                                     [...(updatingProduct?.editions ?? [])]
                                     :
                                     [...(product?.editions ?? [])]
 
                                 if (e.target.checked) {
-                                    selectedEditions.push({ _id: editionId, console: ed.console, stock: 0 })
+                                    selectedEditions.push({ _id: editionId, console: editionConsole, slug: editionSlug, stock: 0 })
                                 } else {
                                     selectedEditions = selectedEditions.filter((e) => e.console !== editionConsole)
                                 }
@@ -287,7 +290,7 @@ const CreateProduct = () => {
                 ))
             )}
             <div>
-                <button className="mt-10 px-4 py-2 bg-blue-500 text-white m-2"
+                <button className="mt-10 px-4 py-2 bg-blue-500 text-white rounded-full m-2"
                     onClick={
                         (e) => {
                             e.preventDefault()
@@ -298,19 +301,18 @@ const CreateProduct = () => {
                 </button>
                 {updatingProduct && (
                     <>
-                        <button className="mt-10 px-4 py-2 bg-red-500 text-white m-2" onClick={(e) => {
+                        <button className="mt-10 px-4 py-2 bg-red-500 text-white rounded-full m-2" onClick={(e) => {
                             e.preventDefault()
                             deleteProduct()
                         }}>
                             Delete
                         </button>
-                        <button className="mt-10 px-4 py-2 bg-black text-white m-2" onClick={() => setUpdatingProduct(null)}>
+                        <button className="mt-10 px-4 py-2 bg-black text-white rounded-full m-2" onClick={() => setUpdatingProduct(null)}>
                             Clear
                         </button>
                     </>
                 )}
             </div>
-            <pre>{JSON.stringify(product, null, 4)}</pre>
         </div>
     )
 
