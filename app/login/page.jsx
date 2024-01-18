@@ -31,23 +31,24 @@ const Login = () => {
     }
 
     return (
-        <main className="flex justify-center">
-            <form onSubmit={handleSubmit} className="border p-8 mt-20">
-                <h2 className="text-center uppercase font-bold">Login</h2>
+        <main className="grid place-items-center">
+            <form onSubmit={handleSubmit} className="p-8 bg-slate-900 rounded-md">
+                <h2 className="text-center text-2xl text-white uppercase font-bold">Login</h2>
                 <div className="my-4">
-                    <label>Email</label>
-                    <input className="block mt-1 outline-none border border-1 border-gray-300" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                    <label className="text-white font-bold">EMAIL</label>
+                    <input className="block mt-1 focus:outline-none focus:text-sm border-b-2 border-gray-300 rounded-md w-full" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div className="my-4">
-                    <label>Password</label>
-                    <input className="block mt-1 outline-none border border-1 border-gray-300" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                    <label className="text-white font-bold">PASSWORD</label>
+                    <input className="block mt-1 focus:outline-none focus:text-sm border-b-2 border-gray-300 rounded-md w-full" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <button disabled={!email || !password} className="text-white px-4 py-2 bg-blue-500 mt-2 w-full" type="submit">
+                <button disabled={!email || !password} className="font-bold px-4 py-2 bg-white my-1 w-full rounded-md" type="submit">
                     Login
                 </button>
-                <button onClick={() => signIn("google", {callbackUrl: '/'})} className="text-white px-4 py-2 bg-red-500 mt-2 w-full">
-                    Sign in with Google
-                </button>
+                <p className="my-1 text-white font-bold text-center">OR</p>
+                <a onClick={() => signIn("google", {callbackUrl: '/'})} className="block font-bold text-white text-center px-4 py-2 bg-red-600 my-1 w-full cursor-pointer rounded-md">
+                    Continue with Google
+                </a>
             </form>
         </main>
     )
