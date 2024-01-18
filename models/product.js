@@ -11,6 +11,12 @@ const editionSchema = new mongoose.Schema({
         secure_url: String,
         public_id: String,
     },
+    slug: {
+        type: String,
+        unique: true,
+        lowercase: true,
+        index: true
+    }
 });
 
 const ratingSchema = new mongoose.Schema({
@@ -30,13 +36,6 @@ const ratingSchema = new mongoose.Schema({
 },
     { timestamps: true })
 
-const likeSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }
-},
-    { timestamps: true })
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -87,11 +86,16 @@ const productSchema = new mongoose.Schema({
         }
     ],
     sold: {
-    type: Number,
-    default: 0
-},
+        type: Number,
+        default: 0
+    },
     editions: [editionSchema],
-    likes: [likeSchema],
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
     ratings: [ratingSchema]
 }, { timestamps: true })
 
