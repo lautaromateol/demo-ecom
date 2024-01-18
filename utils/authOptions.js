@@ -9,18 +9,31 @@ export const authOptions = {
         strategy: "jwt"
     },
     providers: [
-        CredentialsProvider({
-            async authorize(credentials, req){
-                dbConnect()
-                const {email, password} = credentials; 
-                const user = await User.findOne({ email })
-                if(!user) throw new Error("This user is not registered")
-                if(!user?.password) throw new Error("Please login using your Google account")
-                const isPasswordMatched = await bcrypt.compare(password, user?.password)
-                if(!isPasswordMatched) throw new Error("Incorrect password")
-                return user
+      CredentialsProvider({
+        async authorize(credentials, req){
+            dbConnect();
+            const { email, password } = credentials; 
+            const user = await User.findOne({ email });
+            console.log(credentials)
+            
+            if (!user) {
+              throw new Error("Este usuario no está registrado");
             }
-        }),
+
+            if(!user.password){
+              throw new Error("Please login with Google")
+            }
+            
+            const isPasswordMatched = await bcrypt.compare(password, user.password);
+
+            
+            if (!isPasswordMatched) {
+              throw new Error("Contraseña incorrecta");
+            }
+            
+            return user;
+        }
+    }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
@@ -40,7 +53,7 @@ export const authOptions = {
             }
             return true
         },
-        jwt: async ({token, user}) => {
+        jwt: async ({token}) => {
             const userByEmail = await User.findOne({email: token.email})
             userByEmail.password = undefined
             token.user = userByEmail
