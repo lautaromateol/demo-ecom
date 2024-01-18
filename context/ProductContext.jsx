@@ -17,8 +17,37 @@ const ProductProvider = ({ children }) => {
     const [totalPages, setTotalPages] = useState(1)
     const [updatingProduct, setUpdatingProduct] = useState(null)
     const [uploading, setUploading] = useState(false)
+    const [showImagePreviewModal, setShowImagePreviewModal] = useState(false)
+    const [currentImagePreviewUrl, setCurrentImagePreviewUrl] = useState("")
+    const [showRatingModal, setShowRatingModal] = useState(false)
+    const [currentRating, setCurrentRating] = useState(0)
+    const [comment, setComment] = useState("")
+    const [developers, setDevelopers] = useState([])
+    const [productSearchQuery, setProductSearchQuery] = useState("")
+    const [productSearchResults, setProductSearchResults] = useState([])
 
     const router = useRouter()
+
+    const openModal = (url) => {
+        setCurrentImagePreviewUrl(url)
+        setShowImagePreviewModal(true)
+    }
+
+    const closeModal = () => {
+        setShowImagePreviewModal(false)
+        setShowRatingModal(false)
+        setCurrentImagePreviewUrl("")
+    }
+
+    const showImage = (src, title) => {
+        return (
+            <img
+                src={src}
+                className="w-full h-full object-contain"
+                alt={title}
+            />
+        )
+    }
 
     const uploadImages = (event) => {
         const files = event.target.files
@@ -33,7 +62,7 @@ const ProductProvider = ({ children }) => {
             setUploading(true)
             const uploadPromises = []
 
-           for(let i = 0; i < files.length; i++){
+            for (let i = 0; i < files.length; i++) {
                 const file = files[i]
                 const promise = new Promise((resolve) => {
                     Resizer.imageFileResizer(
@@ -53,7 +82,7 @@ const ProductProvider = ({ children }) => {
                             })
                                 .then((response) => response.json())
                                 .then((data) => {
-                                    mainImages.unshift(data);
+                                    mainImages.push(data);
                                     resolve()
                                 })
                                 .catch((err) => {
@@ -82,10 +111,10 @@ const ProductProvider = ({ children }) => {
 
         const productEdition = edition
 
-        if(file){
+        if (file) {
             setUploading(true)
             try {
-                await new Promise((resolve, reject)=> {
+                await new Promise((resolve, reject) => {
                     Resizer.imageFileResizer(
                         file,
                         1280,
@@ -113,11 +142,11 @@ const ProductProvider = ({ children }) => {
                         "base64"
                     )
                 })
-                const editions = product?.editions.map((edition)=> (
+                const editions = product?.editions.map((edition) => (
                     edition.console === productEdition.console ? productEdition : edition
                 ))
 
-                setProduct({...product, editions})
+                setProduct({ ...product, editions })
 
                 setUploading(false)
 
@@ -126,8 +155,8 @@ const ProductProvider = ({ children }) => {
                 setUploading(false)
             }
         }
-      };
-      
+    };
+
 
     const deleteImage = (public_id) => {
         setUploading(true)
@@ -138,13 +167,13 @@ const ProductProvider = ({ children }) => {
             },
             body: JSON.stringify({ public_id })
         })
-        .then((response) => response.json())
-        .then((data) => {
-            const filteredImages = updatingProduct ? updatingProduct.images.filter((image)=> image.public_id !== public_id) : product.images.filter((image) => image !== public_id)
-            updatingProduct ? setUpdatingProduct({...updatingProduct, images: filteredImages}) : setProduct({...product, images: filteredImages})
-        })
-        .catch((error) => toast.error("Error deleting the image ", error))
-        .finally(()=> setUploading(false))
+            .then((response) => response.json())
+            .then((data) => {
+                const filteredImages = updatingProduct ? updatingProduct.images.filter((image) => image.public_id !== public_id) : product.images.filter((image) => image !== public_id)
+                updatingProduct ? setUpdatingProduct({ ...updatingProduct, images: filteredImages }) : setProduct({ ...product, images: filteredImages })
+            })
+            .catch((error) => toast.error("Error deleting the image ", error))
+            .finally(() => setUploading(false))
     }
 
     const createProduct = async () => {
@@ -232,6 +261,36 @@ const ProductProvider = ({ children }) => {
         }
     }
 
+    const fetchDevelopers = async () => {
+        try {
+            const response = await fetch(`${process.env.API}/product/developers`)
+            const data = await response.json()
+            if (response.ok) {
+                setDevelopers(data)
+            } else {
+                throw new Error("Failed to fetch developers")
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const fetchProductSearchResults = async(e)=> {
+        e.preventDefault()
+        try {
+            const response = await fetch(`${process.env.API}/product/search?title=${productSearchQuery}`)
+            const data = await response.json()
+            if (response.ok) {
+                setProductSearchResults(data)
+                router.push(`/search/product/?productSearchQuery=${productSearchQuery}`)
+            } else {
+                toast.error(data.error)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <ProductContext.Provider
             value={{
@@ -254,6 +313,26 @@ const ProductProvider = ({ children }) => {
                 fetchProducts,
                 updateProduct,
                 deleteProduct,
+                developers,
+                fetchDevelopers,
+                showImagePreviewModal,
+                setShowImagePreviewModal,
+                currentImagePreviewUrl,
+                setCurrentImagePreviewUrl,
+                openModal,
+                closeModal,
+                showImage,
+                showRatingModal,
+                setShowRatingModal,
+                currentRating,
+                setCurrentRating,
+                comment,
+                setComment,
+                productSearchQuery,
+                setProductSearchQuery,
+                productSearchResults,
+                setProductSearchResults,
+                fetchProductSearchResults
             }}
         >
             {children}

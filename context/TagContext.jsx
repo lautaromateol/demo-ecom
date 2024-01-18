@@ -55,6 +55,20 @@ const TagProvider = ({ children }) => {
         }
     }
 
+    const fetchTagsPublic = async () => {
+        try {
+            const response = await fetch(`${process.env.API}/tags`)
+            const data = await response.json()
+            if (response.ok) {
+                setTags(data)
+            } else {
+                toast.error(data.error)
+            }
+        } catch (error) {
+            toast.error("An error has ocurred fetching the data. Try again.")
+        }
+    }
+
     const updateTag = async () => {
         try {
             const response = await fetch(`${process.env.API}/admin/tag/${updatingTag?._id}`, {
@@ -113,6 +127,7 @@ const TagProvider = ({ children }) => {
             createTag,
             updateTag,
             fetchTags,
+            fetchTagsPublic,
             deleteTag
         }}>
             {children}

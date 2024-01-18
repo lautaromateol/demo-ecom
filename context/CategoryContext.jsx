@@ -53,6 +53,20 @@ const CategoryProvider = ({children}) => {
         }
     }
 
+    const fetchCategoriesPublic = async()=> {
+        try {
+            const response = await fetch(`${process.env.API}/categories`)
+            const data = await response.json()
+            if(response.ok){
+                setCategories(data)
+            } else {
+                toast.error(data.error)
+            }
+        } catch (error) {
+            toast.error("An error has ocurred. Try again")
+        }
+    }
+
     const updateCategory = async()=> {
         try {
             const response = await fetch(`${process.env.API}/admin/category/${updatingCategory?._id}`, {
@@ -107,7 +121,7 @@ const CategoryProvider = ({children}) => {
 
     return(
         <CategoryContext.Provider value={
-            {name, setName, categories, setCategories, updatingCategory, setUpdatingCategory, createCategory, fetchCategories, updateCategory, deleteCategory}
+            {name, setName, categories, setCategories, updatingCategory, setUpdatingCategory, createCategory, fetchCategories, fetchCategoriesPublic, updateCategory, deleteCategory}
             }>
             {children}
         </CategoryContext.Provider>
