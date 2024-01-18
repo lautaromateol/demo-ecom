@@ -11,13 +11,16 @@ const AdminNav = () => {
           Create Product
         </Link>
         <Link href='/dashboard/admin/products' className="nav-link">
-          Products List
+          Products
         </Link>
         <Link href='/dashboard/admin/category' className="nav-link">
           Categories
         </Link>
         <Link href='/dashboard/admin/tag' className="nav-link">
           Tags
+        </Link>
+        <Link href='/dashboard/admin/edition' className="nav-link">
+          Editions
         </Link>
       </nav>
     </>
