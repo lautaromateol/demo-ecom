@@ -9,7 +9,7 @@ const ProductsCreation = () => {
     return (
         <div className="container">
             <div className="mx-auto max-w-4xl p-4">
-                <p className="text-2xl my-10">{updatingProduct ? "Update product" : "Create product"}</p>
+                <p className="text-2xl font-bold my-10">{updatingProduct ? "UPDATE PRODUCT" : "CREATE PRODUCT"}</p>
                 <CreateProduct />
             </div>
         </div>
