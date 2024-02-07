@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/utils/dbConnect";
 import Product from "@/models/product";
-// import Order from "@/models/order";
+import Order from "@/models/order";
 import { currentUser } from "@/utils/currentUser";
 
 export async function POST(req){
@@ -12,13 +12,13 @@ export async function POST(req){
     try {
         const product = await Product.findById(productId)
         const existingRating = product.ratings.find((rate) => rate.postedBy.toString() === user._id.toString())
-        // const userPurchased = await Order.findOne({
-        //     userId: user._id,
-        //     "cartItems._id": productId
-        // })
-        // if(!userPurchased) {
-        //     return NextResponse.json({ error: "You can only leave reviews to products you have purchased"}, { status: 400 })
-        // }
+        const userPurchased = await Order.findOne({
+            userId: user._id,
+            "cartItems._id": productId
+        })
+        if(!userPurchased) {
+            return NextResponse.json({ error: "You can only leave reviews to products you have purchased"}, { status: 400 })
+        }
         if(existingRating){
             existingRating.rating = rating
             existingRating.comment = comment

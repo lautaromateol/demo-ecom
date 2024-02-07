@@ -32,7 +32,7 @@ const Step1 = ({ handleNextStep }) => {
                   <div className="mt-2">
                     {item.description.length > 160 ? `${item.description.substring(0, 160)}...` : item.description}
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-2 w-full">
                     <AddToCart product={item} reviewAndCheckout={false} />
                   </div>
                 </div>

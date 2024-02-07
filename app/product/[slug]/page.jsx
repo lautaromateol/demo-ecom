@@ -1,10 +1,12 @@
 "use client";
-import ProductImage from "@/components/product/ProductImage"
-import ProductLike from "@/components/product/ProductLike"
-import ProductRating from "@/components/product/ProductRating"
-import ProductReviews from "@/components/product/ProductReviews"
-import ProductEditions from "@/components/product/ProductEditions"
+import ProductImage from "@/components/product/ProductImage";
+import ProductLike from "@/components/product/ProductLike";
+import ProductRating from "@/components/product/ProductRating";
+import ProductEditions from "@/components/product/ProductEditions";
+import ProductCard from "@/components/product/ProductCard";
 import AddToCart from "@/components/product/AddToCart";
+import CouponCode from "@/components/product/CouponCode";
+import UserReviews from "@/components/product/UserReviews";
 
 // export async function generateMetadata({params}){
 //     try {
@@ -40,7 +42,7 @@ async function getProduct(params, searchParams) {
 
 export default async function ProductDetailPage({ params, searchParams }) {
 
-    const { product, selectedEdition } = await getProduct(params, searchParams)
+    const { product, selectedEdition, relatedProducts } = await getProduct(params, searchParams)
 
     return (
         <>
@@ -63,11 +65,9 @@ export default async function ProductDetailPage({ params, searchParams }) {
                                 <span className="uppercase text-gray-600">{product.developer}</span>
                                 <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{product.title}</h1>
                                 <div className="flex mb-4">
-                                    <div className="mr-4">
-                                        <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                                        <span className="text-gray-600 dark:text-gray-300"> ${selectedEdition.price.toFixed(2)}</span>
-                                    </div>
-                                    <div>
+                                    <span className="font-bold text-gray-700 dark:text-gray-300 mr-2">Price:</span>
+                                    <CouponCode selectedEdition={selectedEdition} />
+                                    <div className="mx-2">
                                         <span className="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
                                         <span className="text-gray-600 dark:text-gray-300"> {selectedEdition.stock === 0 ? "Out of Stock" : selectedEdition.stock <= 10 ? "Last 10 units" : "Available"}</span>
                                     </div>
@@ -96,8 +96,18 @@ export default async function ProductDetailPage({ params, searchParams }) {
                         </div>
                     </div>
                     <div className="max-w-4xl mx-auto mt-[150px]">
+                        <p className="font-bold text-xl text-center uppercase">Other products you may like </p>
+                        <div className="grid grid-cols-3 mx-auto">
+                            {relatedProducts.map((product) => (
+                                <div key={product._id}>
+                                    <ProductCard product={product} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="max-w-4xl mx-auto mt-[150px]">
                         <p className="font-bold text-xl text-center uppercase">Product reviews </p>
-                        <ProductReviews reviews={product.ratings} />
+                        <UserReviews reviews={product.ratings} />
                     </div>
                 </div>
             )}

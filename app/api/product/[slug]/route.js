@@ -11,22 +11,35 @@ export async function GET(req, {params}){
        const product = await Product.findOne({
         slug: params.slug
        })
+       .populate("category", "name")
+       .populate("tags", "name")
        .populate({
         path: "ratings.postedBy",
         model: "User",
         select: "name"
        })
+
+       const relatedProducts = await Product.find({
+        $or: [
+            { category: product.category },
+            { tags: { $in: product.tags } }
+        ],
+        _id: { $ne: product._id }
+       }).limit(3)
+
        if(!edition) {
         const selectedEdition = product.editions[0]
         return NextResponse.json({
             product,
-            selectedEdition
+            selectedEdition,
+            relatedProducts
            }, { status: 200 }) 
        }
        const selectedEdition = product.editions.filter((el) => el.slug === edition)[0]
        return NextResponse.json({
         product,
-        selectedEdition
+        selectedEdition,
+        relatedProducts
        }, { status: 200 }) 
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 200 })

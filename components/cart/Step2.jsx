@@ -1,11 +1,14 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { useCartContext } from "@/context/CartContext";
 import Link from "next/link";
 import OrderSummary from "./OrderSummary";
 
 const Step2 = ({ handlePrevStep, handleNextStep }) => {
 
   const { data, status, update } = useSession()
+
+  const { couponCode, setCouponCode, handleCoupon } = useCartContext()
 
   if (status !== "authenticated") {
     return (
@@ -41,10 +44,12 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
               value={data.user.email}
               disabled />
             <input type="text"
+              value={couponCode}
+              onChange={(e)=> setCouponCode(e.target.value)}
               className="w-full outline-none border-b-2 focus:border-blue-600 px-4 py-2 mt-4"
               placeholder="Enter your coupon code here"
             />
-            <button className="px-4 py-2 mt-4 bg-green-700 text-white">
+            <button onClick={() => handleCoupon(couponCode)} disabled={!couponCode.trim()} className="px-4 py-2 mt-4 bg-green-700 text-white">
               APPLY COUPON
             </button>
           </div>
@@ -58,7 +63,7 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
           </div>
         </div>
         <div className="w-1/4">
-          <OrderSummary/>
+          <OrderSummary />
         </div>
       </div>
     </div>

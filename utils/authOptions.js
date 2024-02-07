@@ -14,21 +14,20 @@ export const authOptions = {
             dbConnect();
             const { email, password } = credentials; 
             const user = await User.findOne({ email });
-            console.log(credentials)
             
             if (!user) {
-              throw new Error("Este usuario no está registrado");
+              throw new Error("This user is not registered.");
             }
 
             if(!user.password){
-              throw new Error("Please login with Google")
+              throw new Error("Please login with your Google account.")
             }
             
             const isPasswordMatched = await bcrypt.compare(password, user.password);
 
             
             if (!isPasswordMatched) {
-              throw new Error("Contraseña incorrecta");
+              throw new Error("Incorrect password.");
             }
             
             return user;

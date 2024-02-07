@@ -10,13 +10,13 @@ export async function POST(req){
 
     try {
         const user = await User.findOne({email})
-        if(user) throw new Error("This email is already registered")
+        if(user) throw new Error("This email is already registered.")
         await new User({
             name,
             email,
             password: await bcrypt.hash(password, 10)
         }).save()
-        return NextResponse.json({success: "User registered successfully"}, {status: 200})
+        return NextResponse.json({success: "User registered successfully."}, {status: 200})
     } catch (error) {
         return NextResponse.json( {error: error.message}, {status: 500})
     }

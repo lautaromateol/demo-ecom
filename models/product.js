@@ -6,7 +6,7 @@ const editionSchema = new mongoose.Schema({
     console: { type: String, required: true },
     stock: { type: Number, required: true },
     price: { type: Number, required: true },
-    previousPrice: String,
+    previousPrice: Number,
     image: {
         secure_url: String,
         public_id: String,

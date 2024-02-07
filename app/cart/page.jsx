@@ -31,7 +31,7 @@ const Cart = () => {
             <div className="min-h-screen flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center">
                     <p className="text-2xl mb-5">Your cart is empty!</p>
-                    <Link href='/shop' className="px-4 py-2 bg-green-700 rounded-md text-white font-bold">
+                    <Link href='/shop' className="px-4 py-2 bg-green-700 rounded-lg text-white font-bold">
                         CONTINUE SHOPPING
                     </Link>
                 </div>

@@ -29,7 +29,7 @@ export default async function Home({ searchParams }) {
       <h1 className="text-3xl uppercase font-bold text-center">
         Last Products
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 my-10">
         {products?.map((product) => (
           <ProductCard key={product?._id} product={product} />
         ))}

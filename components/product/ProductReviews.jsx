@@ -1,27 +1,50 @@
-import RatingDistribution from "./RatingDistribution"
-import Stars from "./Stars"
+import Image from "next/image";
+import Link from "next/link";
+import Stars from "./Stars";
 
-export default function ProductReviews({reviews}) {
-  return (
-    <>
-    {reviews?.length ? (
-        <div>
-            <RatingDistribution reviews={reviews}/>
-            <ul className="mt-4 bg-white">
-                {reviews?.map((review) => (
-                    <li className="my-2 shadow-md border-2 p-4" key={review._id}>
-                        <div>
-                            <p>
-                                <strong>{review.postedBy.name}</strong>
-                            </p>
-                            <Stars rating={review.rating}/>
-                            {review?.comment && <p className="mt-3">{review.comment}</p>}
+const ProductReviews = ({ reviews, handleDelete }) => {
+    return (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {reviews.map((review, index) => (
+                <div className="lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md">
+                    <div className="lg:col-span-1 p-4">
+                        <h5 className="card-title text-xl font-semibold mb-2">
+                            <Link
+                                href={`/product/${review?.product?.slug}`}
+                                as={`/product/${review?.product?.slug}`}
+                            >
+                                {review?.product?.title}
+                            </Link>
+                        </h5>
+                        <div className="flex justify-between items-center mb-2">
+                            <div>
+                                <Stars rating={review?.ratings?.rating} />
+                            </div>
+                            {handleDelete && (
+                                <button
+                                    className="bg-red-500 text-white px-4 py-2 rounded-full"
+                                    onClick={() => handleDelete(review?.ratings?._id)}
+                                >
+                                    X
+                                </button>
+                            )}
                         </div>
-                    </li>
-                ))}
-            </ul>
+                        {review?.ratings?.comment && (
+                            <p className="card-text mb-2">{review?.ratings?.comment}</p>
+                        )}
+                        {review?.ratings?.postedBy?.name && (
+                            <p className="text-gray-500">
+                                {review?.ratings?.postedBy?.name}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            ))}
         </div>
-    ) : (<p>No reviews yet.</p>)}
-    </>
-  )
+
+
+    )
 }
+
+export default ProductReviews;
+

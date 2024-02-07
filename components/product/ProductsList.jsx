@@ -35,7 +35,7 @@ const ProductsList = () => {
                         </div>
                         <div className="p-2">
                             <h5 onClick={() => handleClick(product)} className="text-blue-600 cursor-pointer">
-                                ${product?.editions[0].price?.toFixed(2)} {product?.title}
+                                {product?.title}
                             </h5>
                             <p>
                                 {product?.description.length > 140 ?

@@ -36,8 +36,8 @@ const SearchResults = () => {
         <div className="container">
             <div className="mx-auto max-w-5xl p-4">
                 <h4 className="text-xl font-bold uppercase">Search results: {productSearchResults?.length}</h4>
-                <hr className="w-full mt-2" />
-                <div className="grid grid-cols-3">
+                <hr className="w-full my-2" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {productSearchResults?.map((product) => (
                         <ProductCard key={product?._id} product={product} />
                     ))}

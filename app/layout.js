@@ -8,22 +8,28 @@ import TagProvider from '@/context/TagContext'
 import ProductProvider from '@/context/ProductContext'
 import EditionProvider from '@/context/EditionContext'
 import TopNav from '@/components/nav/TopNav'
+import CartProvider from '@/context/CartContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <SessionProvider>
         <CategoryProvider>
           <TagProvider>
             <ProductProvider>
               <EditionProvider>
-            <body className={inter.className}>
-              <TopNav />
-              <Toaster />
-              {children}
-            </body>
+                <CartProvider>
+                  <body className={inter.className}>
+                    <TopNav />
+                    <Toaster />
+                    {children}
+                  </body>
+                </CartProvider>
               </EditionProvider>
             </ProductProvider>
           </TagProvider>

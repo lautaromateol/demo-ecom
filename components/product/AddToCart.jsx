@@ -39,26 +39,42 @@ const AddToCart = ({ product, selectedEdition, reviewAndCheckout }) => {
     }
 
     return (
-        <div className="w-1/2">
-            {cartItems.some((item) => item._id === product._id) ? (
-                <div className="flex flex-col items-center justify-center">
-                    <div className={`${reviewAndCheckout && "px-4 py-2 bg-green-700 rounded-full"} w-full flex justify-center items-center`}>
-                        <button  className={`${reviewAndCheckout ? "text-white" : "text-green-700 border-2 border-green-700 px-3 py-2"} text-xl font-bold mx-4`} type="button" onClick={handleDecrement}>
-                            -
-                        </button>
-                        <input className={`${reviewAndCheckout ? "rounded-full" : "border-b-2 border-green-700"} text-center w-2/5 outline-none`} type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
-                        <button className={`${reviewAndCheckout ? "text-white" : "text-green-700 border-2 border-green-700 px-3 py-2"} text-xl font-bold mx-4`} type="button" onClick={handleIncrement}>
-                            +
-                        </button>
-                    </div>
-                    {reviewAndCheckout && <Link className="w-full mt-2 px-4 py-2 bg-gray-900 border-2 font-bold text-white text-center rounded-full" href='/cart'>
-                        Review & Checkout
-                    </Link>}
+        <>
+            {reviewAndCheckout ?
+                <div className="w-1/2">
+                    {cartItems.some((item) => item._id === product._id) ? (
+                        <div className="flex flex-col">
+                            <div className={`px-4 py-2 bg-green-700 rounded-full w-full flex justify-center items-center`}>
+                                <button className={`text-white text-xl font-bold mx-4`} type="button" onClick={handleDecrement}>
+                                    -
+                                </button>
+                                <input className={`rounded-full text-center w-2/5 outline-none`} type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
+                                <button className={`text-white text-xl font-bold mx-4`} type="button" onClick={handleIncrement}>
+                                    +
+                                </button>
+                            </div>
+                            <Link className="w-full mt-2 px-4 py-2 bg-gray-900 border-2 font-bold text-white text-center rounded-full" href='/cart'>
+                                Review & Checkout
+                            </Link>
+                        </div>
+
+                    ) : (
+                        <button onClick={handleAddToCart} className="w-full bg-green-700 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-900 dark:hover:bg-gray-700">Add to Cart</button>
+                    )}
                 </div>
-            ) : (
-                <button onClick={handleAddToCart} className="w-full bg-green-700 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-900 dark:hover:bg-gray-700">Add to Cart</button>
-            )}
-        </div>
+                :
+                <div className="w-full flex justify-between">
+                    <button className="border border-green-700 text-green-700 px-4 py-2" type="button" onClick={handleDecrement}>
+                        -
+                    </button>
+                    <input className="w-2/3 border-b border-green-700 outline-none text-center" type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
+                    <button className="border border-green-700 text-green-700 px-4 py-2" type="button" onClick={handleIncrement}>
+                        +
+                    </button>
+                </div>
+            }
+        </>
+
     )
 }
 
