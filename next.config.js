@@ -1,4 +1,5 @@
-const config = require('./config')
+/** @type {import('next').NextConfig} */
+const config = require("./config");
 
 const nextConfig = {
     images: {
