@@ -1,55 +1,60 @@
 "use client";
-import { useEffect, useState } from "react";
-import AdminChart from "@/components/admin/AdminChart";
-import toast from "react-hot-toast";
+import { useState, useEffect } from "react";
+import { FaShoppingCart, FaShoppingBag, FaDollarSign, FaUser } from "react-icons/fa";
+import CardDataStats from "@/components/admin/CartDataStats";
+// import TopProductsTable from "@/components/admin/TopProductsTable";
 
-const AdminDashboard = () => {
 
-  const [chartData, setChartData] = useState([])
+const AdminDashboard = async () => {
+
+  const [cardData, setCardData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const fetchChartData = async () => {
+  const fetchCardData = async () => {
     try {
       const response = await fetch(`${process.env.API}/admin/chart`)
       const data = await response.json()
       if (response.ok) {
-        setChartData(data)
+        setCardData(data)
         setLoading(false)
       } else {
-        setLoading(false)
-        toast.error("Error fetching chart data")
         console.log(data.error)
       }
     } catch (error) {
-      toast.error("Error fetching chart data")
       console.log(error)
     }
   }
 
   useEffect(() => {
-    fetchChartData()
+    fetchCardData()
   }, [])
 
   return (
     <>
       {loading ?
-        <div className="flex items-center justify-center min-h-screen text-red-900">
-          LOADING
-        </div>
-        :
-        <div className="container">
-          <div className="mx-auto max-w-4xl p-4">
-            <p className="text-medium">
-              Admin Dashboard
-            </p>
-            <hr className="w-full" />
-            <AdminChart chartData={chartData} />
+        <div className="flex h-screen items-center justify-center bg-white dark:bg-black">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+        </div> :
+        <>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+            <CardDataStats title="Total Users" total={cardData.totalUsers}>
+              <FaUser />
+            </CardDataStats>
+            <CardDataStats title="Total Orders" total={cardData.totalOrders}>
+              <FaShoppingCart />
+            </CardDataStats>
+            <CardDataStats title="Total Products" total={cardData.totalProducts}>
+              <FaShoppingBag />
+            </CardDataStats>
+            <CardDataStats title="Total Profit" total={cardData.profit} money={true}>
+              <FaDollarSign />
+            </CardDataStats>
           </div>
-        </div>
+          {/* <TopProductsTable topProducts={cardData.topProducts} /> */}
+        </>
       }
-
     </>
   )
 }
 
-export default AdminDashboard
+export default AdminDashboard;

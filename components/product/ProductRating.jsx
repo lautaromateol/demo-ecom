@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useProductContext } from "@/context/ProductContext";
@@ -60,7 +60,7 @@ const ProductRating = ({ product }) => {
             if (response.ok) {
                 setProductRatings(data?.ratings)
                 setShowRatingModal(false)
-                toast.success("Thanks for leaving a rating")
+                toast.success("Thanks for leaving a rating.")
                 window.location.reload()
             } else if(response.status === "400"){
                 toast.error(data.error)

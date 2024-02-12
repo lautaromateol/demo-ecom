@@ -1,6 +1,10 @@
 import ProductCard from "@/components/product/ProductCard";
 import ProductFilter from "@/components/product/ProductFilter";
 
+export const metadata = {
+    title: "Shop"
+}
+
 async function getProducts(searchParams) {
     const searchQuery = new URLSearchParams({
         page: searchParams.page || 1,
@@ -18,7 +22,7 @@ async function getProducts(searchParams) {
         })
         const data = await response.json()
         if (!response.ok) throw new Error("Failed to fetch products")
-        if(!data || !Array.isArray(data.products)) throw new Error("No products returned")
+        if (!data || !Array.isArray(data.products)) throw new Error("No products returned")
         return data
     } catch (error) {
         console.log(error.message)
@@ -27,7 +31,7 @@ async function getProducts(searchParams) {
 }
 
 export default async function Shop({ searchParams }) {
-    
+
     const { products } = await getProducts(searchParams)
 
     return (
@@ -38,11 +42,11 @@ export default async function Shop({ searchParams }) {
                 </div>
                 <div className="w-full lg:w-3/4 p-4">
                     <h1 className="text-3xl font-bold text-center uppercase">All products</h1>
-                    <div className="grid grid-cols-3">
-                    {products?.map((product)=> (
-                        <ProductCard product={product}/>
+                    <div className="grid grid-cols-1 md:grid-cols-3">
+                        {products?.map((product) => (
+                            <ProductCard product={product} />
                         ))}
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

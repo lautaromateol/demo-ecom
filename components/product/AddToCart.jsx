@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { useCartContext } from "@/context/CartContext";
 import Link from "next/link";
@@ -35,7 +35,7 @@ const AddToCart = ({ product, selectedEdition, reviewAndCheckout }) => {
     }
 
     const handleAddToCart = () => {
-        addToCart(product, selectedEdition, quantity)
+        addToCart(product, quantity)
     }
 
     return (
@@ -59,18 +59,16 @@ const AddToCart = ({ product, selectedEdition, reviewAndCheckout }) => {
                         </div>
 
                     ) : (
-                        <button onClick={handleAddToCart} className="w-full bg-green-700 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-900 dark:hover:bg-gray-700">Add to Cart</button>
+                        <button disabled={selectedEdition.stock === 0} onClick={handleAddToCart} className={`w-full ${selectedEdition.stock > 0 ? "bg-green-700 hover:bg-green-900" : "bg-red-500 cursor-not-allowed"} dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold dark:hover:bg-gray-700`}>
+                            {selectedEdition.stock > 0 ? "Add to Cart" : "Out of Stock"}
+                        </button>
                     )}
                 </div>
                 :
-                <div className="w-full flex justify-between">
-                    <button className="border border-green-700 text-green-700 px-4 py-2" type="button" onClick={handleDecrement}>
-                        -
-                    </button>
-                    <input className="w-2/3 border-b border-green-700 outline-none text-center" type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
-                    <button className="border border-green-700 text-green-700 px-4 py-2" type="button" onClick={handleIncrement}>
-                        +
-                    </button>
+                <div className="flex items-center border-gray-100">
+                    <span onClick={handleDecrement} className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
+                    <input className="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
+                    <span onClick={handleIncrement} className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
                 </div>
             }
         </>

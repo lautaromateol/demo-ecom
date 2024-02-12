@@ -32,9 +32,11 @@ export async function POST(req) {
                         _id: product._id,
                         title: product.title,
                         slug: product.slug,
-                        edition: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.console,
-                        price: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.price,
-                        image: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.image.secure_url
+                        price: product.price,
+                        image: product.main_images[0]
+                        // edition: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.console,
+                        // price: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.price,
+                        // image: cartItems[cartItems.findIndex(item => item.title == product.title)].selectedEdition.image.secure_url
 
                     };
                 });
@@ -50,14 +52,26 @@ export async function POST(req) {
                 };
                 await Order.create(orderData);
                 for (const cartItem of cartItems) {
-                    const product = await Product.findById(cartItem._id);
-                    if (product) {
-                        product.stock -= cartItem.quantity;
-                        await product.save();
+                    const product = await Product.findById(cartItem.id);
+                    // const selectedEdition = cartItem.selectedEdition
+                    // selectedEdition.stock -= cartItem.quantity
+                    // const newEditions = product.editions.map((ed) => ed.console === selectedEdition.console ? selectedEdition : ed) 
+                    // if (product) {
+                    //     product.editions = newEditions
+                    //     await product.save();
+                    // }
+                    if(product) {
+                        product.stock -= cartItem.quantity
+                        await product.save()
                     }
                 }
                 return NextResponse.json({ ok: true });
         }
+        return NextResponse.json({
+            error: "Webhook Error"
+        }, {
+            status: 404
+        })
     }
     catch (err) {
         console.log(err)

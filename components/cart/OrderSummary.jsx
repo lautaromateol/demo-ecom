@@ -1,6 +1,6 @@
 import { useCartContext } from "@/context/CartContext";
 
-const OrderSummary = () => {
+const OrderSummary = ({handleNextStep}) => {
 
     const { cartItems } = useCartContext()
 
@@ -19,28 +19,27 @@ const OrderSummary = () => {
     const itemOrItems = totalItems() > 1 ? "items" : "item"
 
     return (
-        <div>
-            <p className="bg-indigo-100 text-blue-600 w-full px-4 py-2">
-                Order summary
-            </p>
-            <ul className="shadow-lg">
-                {cartItems.map((product) => (
-                    <div className="p-4 flex space-x-2">
-                        <div className="w-1/4 h-full overflow-hidden">
-                            <img className="w-full h-full object-cover" src={product.selectedEdition.image.secure_url} alt={product.title} />
-                        </div>
-                        <p className="flex flex-wrap uppercase">{product.title} - {product.selectedEdition.console} edition</p>
-                        <div>
-                        <p>${product.selectedEdition.price.toFixed(2)}</p>
-                        <p className="underline">Qty: {product.quantity}</p>
-                        </div>
-                    </div>
-                ))}
-            </ul>
-            <div className="flex justify-between p-4 mt-2">
-                <p>Total {totalItems()} {itemOrItems}: </p>
-                <p className="text-2xl">${calculateTotal().toFixed(2)}</p>
+        <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+            <div className="mb-2 flex justify-between">
+                <p className="text-gray-700">Subtotal</p>
+                <p className="text-gray-700">${calculateTotal().toFixed(2)}</p>
             </div>
+            <div className="mb-2 flex justify-between">
+                <p className="text-gray-700">Shipping</p>
+                <p className="text-gray-700">$5.00</p>
+            </div>
+            <div className="flex justify-between">
+                <p className="text-gray-700">VAT</p>
+                <p className="text-gray-700">${((calculateTotal() * (0,10)) / 100).toFixed(2)}</p>
+            </div>
+            <hr className="my-4" />
+            <div className="flex justify-between">
+                <p className="text-lg font-bold">Total</p>
+                <div>
+                    <p className="mb-1 text-lg font-bold">${(calculateTotal() + (calculateTotal() * (0,10) / 100) + 5).toFixed(2)}</p>
+                </div>
+            </div>
+            <button onClick={handleNextStep} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
         </div>
     )
 }

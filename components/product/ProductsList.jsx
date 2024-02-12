@@ -1,53 +1,58 @@
-"use client"
-import { useEffect } from "react"
+"use client";
 import { useProductContext } from "@/context/ProductContext"
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import Pagination from "./Pagination"
+import { useRouter } from "next/navigation"
+import { Table } from "antd"
 
-const ProductsList = () => {
+const ProductsList = ({products}) => {
 
-    const { products, currentPage, totalPages, fetchProducts, setUpdatingProduct } = useProductContext()
+    const { setUpdatingProduct } = useProductContext()
 
     const router = useRouter()
-    const searchParams = useSearchParams()
-
-    const page = searchParams.get("page")
 
     const handleClick = (product) => {
         setUpdatingProduct(product)
         router.push('/dashboard/admin/product')
     }
 
-    useEffect(() => {
-        fetchProducts(page)
-    }, [page])
+    const columns = [
+        {
+            title: 'Image',
+            key: 'main_images[0].public_id',
+            dataIndex: 'main_images',
+            render: (main_images, record) => (
+                <img className="h-15 w-12" src={main_images[0].secure_url} alt={record.title}/>
+            )
+        },
+        {
+            title: 'Title',
+            key: 'title',
+            dataIndex: 'title'
+        },
+        {
+            title: 'Description',
+            key: 'description',
+            dataIndex: 'description',
+            render: (description) => (
+                <span>{description.length > 160 ? `${description.substring(0, 160)}...` : description}</span>
+            )
+        },
+        {
+            title: 'Update',
+            key: '_id',
+            dataIndex: '_id',
+            render: (_id, record) => (
+                <button onClick={() => handleClick(record)} className="text-green-500">UPDATE</button>
+            )
+        },
+    ]
 
     return (
-        <div className="container">
-            <div className="grid grid-cols-2 gap-2 my-5">
-                {products?.map((product) => (
-                    <div key={product?._id}>
-                        <div className="h-[12rem] overflow-hidden p-1">
-                            <img
-                                src={product?.main_images[0]?.secure_url}
-                                className="border-2 p-2 mx-auto h-full object-center"
-                            />
-                        </div>
-                        <div className="p-2">
-                            <h5 onClick={() => handleClick(product)} className="text-blue-600 cursor-pointer">
-                                {product?.title}
-                            </h5>
-                            <p>
-                                {product?.description.length > 140 ?
-                                    `${product?.description.substring(0, 140)}...`
-                                    : product?.description
-                                }
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <Pagination totalPages={totalPages} currentPage={currentPage}/>
+        <div className="mt-5">
+            <Table
+                dataSource={products}
+                columns={columns}
+                rowKey={(record) => record._id}
+            />
         </div>
     )
 }

@@ -1,11 +1,6 @@
 import Pagination from "@/components/product/Pagination";
 import ProductCard from "@/components/product/ProductCard";
 
-export const metadata = {
-  title: "Next Ecommerce",
-  description: "Find all the videogames you are searching for in this videogame"
-}
-
 async function getProducts(searchParams) {
 
   const { page } = searchParams || 1
@@ -25,7 +20,7 @@ export default async function Home({ searchParams }) {
   const { products, totalPages, currentPage } = await getProducts(searchParams)
 
   return (
-    <main>
+    <main className="p-4">
       <h1 className="text-3xl uppercase font-bold text-center">
         Last Products
       </h1>

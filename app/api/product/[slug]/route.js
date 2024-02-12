@@ -28,10 +28,10 @@ export async function GET(req, {params}){
        }).limit(3)
 
        if(!edition) {
-        const selectedEdition = product.editions[0]
+        // const selectedEdition = product.editions[0]
         return NextResponse.json({
             product,
-            selectedEdition,
+            // selectedEdition,
             relatedProducts
            }, { status: 200 }) 
        }
@@ -42,7 +42,7 @@ export async function GET(req, {params}){
         relatedProducts
        }, { status: 200 }) 
     } catch (error) {
-        return NextResponse.json({ error: error.message }, { status: 200 })
+        return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
 

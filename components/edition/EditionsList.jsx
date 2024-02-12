@@ -11,9 +11,9 @@ const EditionsList = () => {
     }, [])
 
     return (
-        <div className="my-5">
+        <div className="p-8 my-5">
         {editions?.map((e) => (
-            <button className="px-3 py-2 border border-2 m-2 hover:bg-gray-200" onClick={()=> setUpdatingEdition(e)}>{e.console}</button>
+            <button className="px-3 py-2 border border-2 m-2 rounded-full hover:bg-gray-200" onClick={()=> setUpdatingEdition(e)}>{e.console}</button>
         ))}
     </div>
   )

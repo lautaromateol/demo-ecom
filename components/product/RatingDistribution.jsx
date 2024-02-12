@@ -3,6 +3,74 @@ import { calculateAverageRating } from "@/utils/helpers";
 import Stars from "./Stars";
 
 const RatingDistribution = ({ reviews }) => {
+
+  if (!reviews) {
+
+    const distribution = {
+      5: 0,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0,
+    };
+
+    const ratingIcons = Object.keys(distribution).map((rating) => {
+      let percentage = 0
+
+      const starIcons = Array.from(
+        { length: parseInt(rating) },
+        (_, index) => (
+          <FaStar key={index} className="text-yellow-300 text-2xl mx-1" />
+        )
+      );
+
+      const emptyStarIcons = Array.from(
+        { length: 5 - parseInt(rating) },
+        (_, index) => (
+          <FaRegStar key={index} className="text-yellow-300 text-2xl mx-1" />
+        )
+      );
+
+      return (
+        <div key={rating} className="flex items-center mb-2">
+          <div className="ml-4 w-3/5">
+            <div className="h-4 bg-gray-300">
+              <div
+                className="h-4 bg-yellow-400"
+                style={{ width: `${percentage}%` }}
+              ></div>
+            </div>
+          </div>
+          <div className="ml-2 w-2/5">
+            <div className="flex items-center">
+              {starIcons}
+              {emptyStarIcons}
+            </div>
+            <p className="text-sm text-gray-500">{percentage}%</p>
+          </div>
+        </div>
+      );
+    });
+
+
+    return (
+      <div className="flex flex-col md:flex-row lg:flex-row">
+        <div className="w-full md:w-1/4 lg:w-1/4 flex items-center">
+          <div className="mx-auto flex flex-col items-center justify-center">
+            <p className="text-5xl font-bold mb-0">
+              <strong>0</strong>
+            </p>
+            <Stars rating={0} />
+            <p className="text-sm text-gray-500">Product Rating</p>
+          </div>
+        </div>
+        <div className="w-full md:w-3/4 lg:w-3/4">
+          {ratingIcons.reverse()}
+        </div>
+      </div>
+    )
+  }
+
   const distribution = {
     5: 0,
     4: 0,
@@ -62,9 +130,9 @@ const RatingDistribution = ({ reviews }) => {
   });
 
   return (
-    <div className="flex">
-      <div className="w-1/4 flex items-center">
-        <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col md:flex-row lg:flex-row">
+      <div className="w-full md:w-1/4 lg:w-1/4 flex items-center">
+        <div className="mx-auto flex flex-col items-center justify-center">
           <p className="text-5xl font-bold mb-0">
             <strong>{calculateAverageRating(reviews)?.toFixed(1)}</strong>
           </p>
@@ -72,7 +140,9 @@ const RatingDistribution = ({ reviews }) => {
           <p className="text-sm text-gray-500">Product Rating</p>
         </div>
       </div>
-      <div className="w-3/4">{ratingIcons.reverse()}</div>
+      <div className="w-full md:w-3/4 lg:w-3/4">
+        {ratingIcons.reverse()}
+      </div>
     </div>
   );
 };

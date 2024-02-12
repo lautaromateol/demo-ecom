@@ -20,7 +20,8 @@ export async function POST(req) {
                         currency: "usd",
                         product_data: {
                             name: product.title,
-                            images: [item.selectedEdition.image.secure_url]
+                            // images: [item.selectedEdition.image.secure_url]
+                            images: item.main_images[0].secure_url
                         },
                         unit_amount: unitAmount
                     },

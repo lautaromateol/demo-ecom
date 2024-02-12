@@ -5,6 +5,7 @@ import { priceRanges } from "@/utils/filterData";
 import { useCategoryContext } from "@/context/CategoryContext";
 import { useTagContext } from "@/context/TagContext";
 import { useProductContext } from "@/context/ProductContext";
+import { IoFilterSharp } from "react-icons/io5";
 import Link from "next/link";
 import Stars from "./Stars";
 
@@ -60,10 +61,10 @@ const ProductFilter = ({ searchParams }) => {
 
             {/* Filtros para dispositivos móviles */}
             <button
-                className="bg-blue-500 text-white px-4 py-2 mt-4 w-full md:hidden"
+                className="flex items-center justify-center space-x-2 border border-gray-500 bg-white text-black px-4 py-2 mt-4 w-full md:hidden"
                 onClick={toggleMobileMenu}
             >
-                Toggle Filters
+                Filters<IoFilterSharp/>
             </button>
             {isMobileMenuOpen && (
                 <div className="md:hidden mt-4">
@@ -137,7 +138,7 @@ const ProductFilter = ({ searchParams }) => {
                         })}
                     </div>
 
-                    <p className="mt-4 bg-indigo-100 text-black p-2">Categories</p>
+                    <p className="mt-4 bg-blue-500 text-white p-2">Categories</p>
                     <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                         {categories?.map((c) => {
                             const url = {
@@ -172,7 +173,7 @@ const ProductFilter = ({ searchParams }) => {
                     </div>
                     {category && (
                         <>
-                            <p className="mt-4 bg-indigo-100 text-black p-2">Tags</p>
+                            <p className="mt-4 bg-blue-500 text-white p-2">Tags</p>
                             <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                                 {tags?.filter((t) => t?.parent === category)?.map((t) => {
                                     const url = {
@@ -207,7 +208,7 @@ const ProductFilter = ({ searchParams }) => {
                             </div>
                         </>
                     )}
-                    <p className="mt-4 bg-indigo-100 text-black p-2">Developers</p>
+                    <p className="mt-4 bg-blue-500 text-white p-2">Developers</p>
                     <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                         {developers?.map((d, index) => {
                             const url = {
@@ -316,7 +317,7 @@ const ProductFilter = ({ searchParams }) => {
                         );
                     })}
                 </div>
-                <p className="mt-4 bg-indigo-100 text-black p-2">Categories</p>
+                <p className="mt-4 bg-blue-500 text-white p-2">Categories</p>
                 <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                     {categories?.map((c) => {
                         const url = {
@@ -351,7 +352,7 @@ const ProductFilter = ({ searchParams }) => {
                 </div>
                 {category && (
                     <>
-                        <p className="mt-4 bg-indigo-100 text-black p-2">Tags</p>
+                        <p className="mt-4 bg-blue-500 text-white p-2">Tags</p>
                         <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                             {tags?.filter((t) => t?.parent === category)?.map((t) => {
                                 const url = {
@@ -386,7 +387,7 @@ const ProductFilter = ({ searchParams }) => {
                         </div>
                     </>
                 )}
-                <p className="mt-4 bg-indigo-100 text-black p-2">Developers</p>
+                <p className="mt-4 bg-blue-500 text-white p-2">Developers</p>
                 <div className="flex flex-wrap overflow-y-scroll max-h-[200px] items-center p-2 mx-1">
                     {developers?.map((d, index) => {
                         const url = {

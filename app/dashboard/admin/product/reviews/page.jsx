@@ -1,47 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ProductReviews from "@/components/product/ProductReviews";
-import Pagination from "@/components/product/Pagination";
+import ReviewsList from "@/components/admin/ReviewsList";
 import toast from "react-hot-toast";
-
-import React from 'react'
 
 const AdminProductReviewsPage = () => {
 
     const [reviews, setReviews] = useState([]);
-    const [totalRatings, setTotalRatings] = useState(0);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true);
-
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const page = searchParams.get("page");
-
-    const router = useRouter();
-
-    const getReviews = async (page) => {
+    const getReviews = async() => {
         try {
             const response = await fetch(
-                `${process.env.API}/admin/product/reviews?page=${page}`,
+                `${process.env.API}/admin/product/reviews`,
                 {
                     method: "GET",
                 }
             );
             const data = await response.json();
-            console.log("DATA in admin reviews with pagination => ", data);
-            setReviews(data.reviews);
-            setCurrentPage(data.currentPage);
-            setTotalPages(data.totalPages);
-            setTotalRatings(data.totalRatings);
-            setLoading(false);
+            setReviews(data);
         }
         catch (error) {
             console.log(error);
             toast.error(error);
-            setLoading(false);
         }
     };
 
@@ -60,8 +39,8 @@ const AdminProductReviewsPage = () => {
             const data = await response.json();
             if (response.ok) {
                 toast.success(data.message)
-                getReviews(page)
-            } else if(response.status === 404) {
+                window.location.reload()
+            } else if (response.status === 404) {
                 toast.error(data.message)
             } else {
                 toast.error("Error deleting the review.")
@@ -75,43 +54,16 @@ const AdminProductReviewsPage = () => {
 
 
     useEffect(() => {
-        getReviews(page)
-    }, [page])
+        getReviews()
+    }, [])
 
     return (
-        <>
-            {loading ?
-                <div className="flex items-center justify-center min-h-screen text-red-900">
-                    LOADING
-                </div>
-                :
-                <>
-                    {
-                        reviews ?
-                            <div className="container">
-                                <div className="mx-auto max-w-4xl p-4">
-                                    <p className="text-medium">
-                                        Product Reviews ({totalRatings})
-                                    </p>
-                                    <hr className="w-full mb-5" />
-                                    <ProductReviews reviews={reviews} handleDelete={handleDelete} />
-                                </div>
-                                <Pagination
-                                    currentPage={currentPage}
-                                    totalPages={totalPages}
-                                    pathname={pathname}
-                                />
-                            </div>
-                            :
-                            <div className="flex justify-center items-center text-red-500 min-h-screen">
-                                No Reviews
-                            </div>
-                    }
-                </>
-
-            }
-
-        </>
+        <div className="container">
+            <div className="mx-auto max-w-4xl p-4">
+                <p className="text-2xl font-bold my-10">REVIEWS LIST</p>
+                <ReviewsList reviews={reviews} handleDelete={handleDelete} />
+            </div>
+        </div>
     )
 }
 

@@ -13,12 +13,14 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
   if (status !== "authenticated") {
     return (
       <div className="container mt-10">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto p-4">
           <div className="flex">
             <button onClick={handlePrevStep} className="w-1/2 px-4 py-2 border-2 border-green-700 text-green-700">
               Previous
             </button>
-            <Link className="w-1/2 px-4 py-2 bg-blue-500 text-white text-center" href={`/login?callbackUrl=${window.location.href}`}>
+            <Link className="w-1/2 px-4 py-2 bg-blue-500 text-white text-center" 
+                href={`/login?callbackUrl=${window.location.href}`}
+                >
               Login to Continue
             </Link>
           </div>
@@ -28,9 +30,9 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
   }
 
   return (
-    <div className="container flex items-center justify-center mt-10">
+    <div className="container flex items-center justify-center px-4 mt-10">
       <div className="max-w-7xl flex space-x-4">
-        <div className="w-3/4">
+        <div className="w-full">
           <p className="bg-indigo-100 text-blue-600 w-full px-4 py-2">
             Contact Details / Login
           </p>
@@ -61,9 +63,6 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
               Next
             </button>
           </div>
-        </div>
-        <div className="w-1/4">
-          <OrderSummary />
         </div>
       </div>
     </div>

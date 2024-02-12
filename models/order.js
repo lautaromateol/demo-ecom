@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
     receipt_url: String,
     refunded: Boolean,
     status: String,
-    ammount_captured: Number,
+    amount_captured: Number,
     currency: String,
     shipping: {
         address: {

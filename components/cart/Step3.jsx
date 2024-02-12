@@ -48,9 +48,9 @@ const Step3 = ({ handlePrevStep }) => {
   }
 
   return (
-    <div className="container flex items-center justify-center mt-10">
+    <div className="container flex items-center justify-center px-4 mt-10">
       <div className="max-w-7xl flex space-x-4">
-        <div className="w-3/4">
+        <div className="w-full">
           <p className="bg-indigo-100 text-blue-600 w-full px-4 py-2">Payment Method</p>
           <p className="px-4 py-2 bg-gray-400 mt-4 text-white">
             Clicking 'Place Order' will securely redirect you to our trusted payment partner, Stripe to complete your checkout. Your payment information is fully protected and encrypted for your security.
@@ -63,9 +63,6 @@ const Step3 = ({ handlePrevStep }) => {
               {loading ? "Processing" : "Place Order"}
             </button>
           </div>
-        </div>
-        <div className="w-1/4">
-          <OrderSummary />
         </div>
       </div>
     </div>

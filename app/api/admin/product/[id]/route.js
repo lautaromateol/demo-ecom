@@ -7,6 +7,9 @@ export async function PUT(req, {params}){
     const body = await req.json()
 
     try {
+
+        // if(body.editions.some((item) => !item.stock || !item.price || !item.image)) throw new Error("Your edition is incomplete.")
+
         const updatedProduct = await Product.findByIdAndUpdate(
             params.id,
             { ...body },

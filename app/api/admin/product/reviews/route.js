@@ -6,12 +6,7 @@ import queryString from "query-string";
 export async function GET(req){
     await dbConnect()
 
-    const { page } = queryString.parseUrl(req.url).query
-    const pageSize = 6
-
     try {
-        const currentPage = Number(page) || 1
-        const skip = (currentPage - 1) * pageSize
 
         const reviews = await Product.aggregate([
             {
@@ -61,33 +56,9 @@ export async function GET(req){
             {
               $sort: { "ratings.createdAt": -1 }, // Sort by createdAt field in descending order
             },
-            {
-              $skip: skip,
-            },
-            {
-              $limit: pageSize,
-            },
           ]);
       
-          const totalRatings = await Product.aggregate([
-            {
-              $group: {
-                _id: null,
-                totalRatings: { $sum: { $size: "$ratings" } },
-              },
-            },
-          ]);
-      
-          const totalAllRatings =
-            totalRatings.length > 0 ? totalRatings[0].totalRatings : 0;
-            
-          return NextResponse.json(
-            {
-              reviews,
-              totalRatings: totalAllRatings,
-              currentPage,
-              totalPages: Math.ceil(totalAllRatings / pageSize),
-            },
+          return NextResponse.json(reviews,
             { status: 200 }
           );
     } catch (error) {

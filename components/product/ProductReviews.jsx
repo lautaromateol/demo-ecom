@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Stars from "./Stars";
 
@@ -6,7 +5,7 @@ const ProductReviews = ({ reviews, handleDelete }) => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {reviews.map((review, index) => (
-                <div className="lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md">
+                <div className="lg:col-span-1 bg-slate-100 rounded-lg overflow-hidden shadow-md">
                     <div className="lg:col-span-1 p-4">
                         <h5 className="card-title text-xl font-semibold mb-2">
                             <Link

@@ -14,10 +14,10 @@ const CreateTag = () => {
     }, [])
 
     return (
-        <div className="my-5">
+        <div>
             <input type="text"
                 value={updatingTag ? updatingTag.name : name}
-                className="border-b border-b-2 focus:outline-none focus:border-blue-200 border-gray-200 my-2 w-full"
+                className="border-b border-b-2 focus:outline-none focus:border-blue-200 border-gray-200 bg-gray-100 my-2 w-full"
                 placeholder="Tag name"
                 onChange={(e) => updatingTag ? setUpdatingTag({ ...updatingTag, name: e.target.value }) : setName(e.target.value)}
             />
@@ -38,9 +38,9 @@ const CreateTag = () => {
                     ))}
                 </select>
             </div>
-            <div className="flex justify-between">
+            <div className="flex">
                 <button 
-                className="mt-5 px-4 py-2 bg-blue-500 text-white m-2"
+                className="mt-5 px-4 py-2 rounded-full bg-blue-500 text-white m-2"
                 onClick={(e) => {
                     e.preventDefault()
                     if(!parent){
@@ -53,13 +53,13 @@ const CreateTag = () => {
                 </button>
                 {updatingTag && (
                     <>
-                        <button className="mt-5 px-4 py-2 bg-red-500 text-white m-2" onClick={(e) => {
+                        <button className="mt-5 px-4 py-2 bg-red-500 rounded-full text-white m-2" onClick={(e) => {
                             e.preventDefault()
                             deleteTag()
                         }}>
                             Delete
                         </button>
-                        <button className="mt-5 px-4 py-2 bg-black text-white m-2" onClick={() => setUpdatingTag(null)}>
+                        <button className="mt-5 px-4 py-2 bg-black rounded-full text-white m-2" onClick={() => setUpdatingTag(null)}>
                             Clear
                         </button>
                     </>

@@ -2,22 +2,22 @@ import mongoose from "mongoose";
 import category from "@/models/category";
 import tag from "@/models/tag"
 
-const editionSchema = new mongoose.Schema({
-    console: { type: String, required: true },
-    stock: { type: Number, required: true },
-    price: { type: Number, required: true },
-    previousPrice: Number,
-    image: {
-        secure_url: String,
-        public_id: String,
-    },
-    slug: {
-        type: String,
-        unique: true,
-        lowercase: true,
-        index: true
-    }
-});
+// const editionSchema = new mongoose.Schema({
+//     name: { type: String, required: true },
+//     stock: { type: Number, required: true },
+//     price: { type: Number, required: true },
+//     previousPrice: Number,
+//     image: {
+//         secure_url: String,
+//         public_id: String,
+//     },
+//     slug: {
+//         type: String,
+//         unique: true,
+//         lowercase: true,
+//         index: true
+//     }
+// });
 
 const ratingSchema = new mongoose.Schema({
     rating: {
@@ -58,7 +58,18 @@ const productSchema = new mongoose.Schema({
         maxLength: 2000,
         text: true
     },
-    developer: String,
+    price: {
+        type: Number,
+        required: true,
+    },
+    previousPrice: {
+        type: Number,
+    },
+    stocK: {
+        type: Number,
+        required: true,
+    },
+    brand: String,
     shipping: {
         type: Boolean,
         default: true
@@ -89,7 +100,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    editions: [editionSchema],
+    // editions: [editionSchema],
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,

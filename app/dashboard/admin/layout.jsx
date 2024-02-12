@@ -1,12 +1,14 @@
 import AdminNav from "@/components/nav/AdminNav";
 
-const AdminLayout = ({children}) => {
+const AdminLayout = ({ children }) => {
   return (
-    <>
-        <AdminNav/>
+    <div className="flex">
+      <AdminNav />
+      <div className="flex-grow p-4">
         {children}
-    </>
-  )
-}
+      </div>
+    </div>
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;

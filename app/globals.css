@@ -8,6 +8,10 @@
   text-transform: uppercase;
 }
 
+.nav-link:hover {
+  text-decoration: underline;
+}
+
 /* Barra de desplazamiento */
 ::-webkit-scrollbar {
   width: 12px; /* ancho de la barra */
