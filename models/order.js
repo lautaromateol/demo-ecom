@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import user from "./user";
 
 const cartItemSchema = new mongoose.Schema({
     product: {
@@ -9,7 +10,7 @@ const cartItemSchema = new mongoose.Schema({
     slug: String,
     price: Number,
     image: String,
-    edition: String,
+    // edition: String,
     quantity: Number
 })
 
@@ -49,7 +50,6 @@ const orderSchema = new mongoose.Schema({
         ]
     }
 },
-{ timestamps: true }
-)
+{ timestamps: true })
 
 export default mongoose.models.Order || mongoose.model("Order", orderSchema)

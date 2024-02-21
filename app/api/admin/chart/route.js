@@ -4,7 +4,7 @@ import Product from "@/models/product";
 import Order from "@/models/order";
 import User from "@/models/user";
 
-export async function GET(req, { params }) {
+export async function GET(req) {
     await dbConnect()
 
     try {
@@ -20,38 +20,11 @@ export async function GET(req, { params }) {
             }
         ]);
         const totalAmountReceived = profit.length > 0 ? profit[0].totalAmountReceived : 0;
-        const mostBuyed = await Order.aggregate([
-            {
-                $unwind: "$cartItems",
-            },
-            {
-                $group: {
-                    _id: "$cartItems._id",
-                    totalQuantity: { $sum: "$cartItems.quantity" },
-                },
-            },
-            {
-                $sort: { totalQuantity: -1 },
-            },
-            {
-                $limit: 5,
-            },
-        ]);
-        const topProducts = await Promise.all(
-            mostBuyed.map(async (item) => {
-                const product = await Product.findById(item._id);
-                return {
-                    title: product.title,
-                    quantity: item.totalQuantity,
-                };
-            })
-        );
 
         return NextResponse.json({
             totalProducts,
             totalOrders,
             totalUsers,
-            topProducts,
             profit: totalAmountReceived / 100
         })
     } catch (error) {

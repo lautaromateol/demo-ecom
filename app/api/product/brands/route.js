@@ -6,8 +6,8 @@ export async function GET(req) {
     await dbConnect()
 
     try {
-        const developers = await Product.distinct("developer")
-        return NextResponse.json(developers)
+        const brands = await Product.distinct("brand")
+        return NextResponse.json(brands)
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }

@@ -9,6 +9,14 @@ const CategoriesList = () => {
 
     const columns = [
         {
+            title: 'Image',
+            key: 'images[0].public_id',
+            dataIndex: 'images',
+            render: (images, record) => (
+                <img className="h-15 w-12" src={images[0].secure_url} alt={record.name}/>
+            )
+        },
+        {
             title: 'Name',
             dataIndex: 'name',
             key: 'name'

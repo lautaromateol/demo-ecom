@@ -37,6 +37,19 @@ const ProductsList = ({products}) => {
             )
         },
         {
+            title: 'Price',
+            key: 'price',
+            dataIndex: 'price',
+            render: (price) => (
+                <span>${price.toFixed(2)}</span>
+            )
+        },
+        {
+            title: 'Stock',
+            key: 'stock',
+            dataIndex: 'stock',
+        },
+        {
             title: 'Update',
             key: '_id',
             dataIndex: '_id',

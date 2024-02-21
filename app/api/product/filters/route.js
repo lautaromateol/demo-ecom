@@ -6,21 +6,21 @@ import queryString from "query-string";
 export async function GET(req){
     await dbConnect()
     const searchParams = queryString.parseUrl(req.url).query
-    const { page, category, tag, developer, ratings, minPrice, maxPrice } = searchParams || {}
+    const { page, category, tag, brand, ratings, minPrice, maxPrice } = searchParams || {}
     const pageSize = 6
     const filter = {}
 
     if(category){
         filter.category = category
     }
-    if(developer){
-        filter.developer = developer
+    if(brand){
+        filter.brand = brand
     }
     if(tag){
         filter.tags = tag
     }
     if(minPrice && maxPrice){
-        filter.editions[0].price = {
+        filter.price = {
             $gte: minPrice,
             $lte: maxPrice
         }

@@ -80,7 +80,7 @@ const TagProvider = ({ children }) => {
             })
             const data = await response.json()
             if (response.ok) {
-                toast.success("Tag updated")
+                toast.success("Tag updated successfully.")
                 setTags(
                     tags.map((t) => (
                         t._id !== data._id ? t : data
@@ -101,7 +101,7 @@ const TagProvider = ({ children }) => {
             })
             const data = await response.json()
             if (response.ok) {
-                toast.success("Tag deleted")
+                toast.success("Tag deleted successfully.")
                 setTags(
                     tags.filter((t) => (
                         t._id !== data._id

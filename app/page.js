@@ -1,35 +1,38 @@
-import Pagination from "@/components/product/Pagination";
-import ProductCard from "@/components/product/ProductCard";
+import Image from 'next/image';
+import Link from "next/link";
+import CategoriesCarrousel from '@/components/homepage/CategoriesCarrousel';
+import BestRated from "@/components/homepage/BestRated";
+import MostSold from '@/components/homepage/MostSold';
+import Guarantees from '@/components/homepage/Guarantees';
+// import Newsletter from '@/components/homepage/Newsletter';
+import BrandsCarrousel from '@/components/homepage/BrandsCarrousel';
 
-async function getProducts(searchParams) {
-
-  const { page } = searchParams || 1
-
-  const response = await fetch(`${process.env.API}/product?page=${page}`,
-    {
-      method: "GET",
-      next: { revalidate: 1 }
-    })
-  const data = await response.json()
-
-  return data
-}
-
-export default async function Home({ searchParams }) {
-
-  const { products, totalPages, currentPage } = await getProducts(searchParams)
-
+const HomePage = () => {
   return (
-    <main className="p-4">
-      <h1 className="text-3xl uppercase font-bold text-center">
-        Last Products
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 my-10">
-        {products?.map((product) => (
-          <ProductCard key={product?._id} product={product} />
-        ))}
+    <main>
+      <div className='min-h-screen'>
+        <Image
+          src="https://res.cloudinary.com/dubuaqpfm/image/upload/v1708357031/pexels-victor-freitas-841130_kzpbgj.jpg"
+          alt="Descripción de la imagen"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-3">
+          <h1 className="text-4xl text-center font-extrabold">Boost your workouts with our premium supplements.</h1>
+          <Link className='px-4 py-2 bg-green-500 hover:bg-green-600 rounded-md' href='/shop'>
+            Our Products
+          </Link>
+        </div>
       </div>
-      <Pagination totalPages={totalPages} currentPage={currentPage} />
+      <Guarantees />
+      <CategoriesCarrousel />
+      <BrandsCarrousel/>
+      <BestRated />
+      <MostSold />
+      {/* <Newsletter/> */}
     </main>
+
   );
-} 
+};
+
+export default HomePage;

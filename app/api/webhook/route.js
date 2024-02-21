@@ -62,6 +62,7 @@ export async function POST(req) {
                     // }
                     if(product) {
                         product.stock -= cartItem.quantity
+                        product.sold += cartItem.quantity
                         await product.save()
                     }
                 }

@@ -17,7 +17,7 @@ const CreateTag = () => {
         <div>
             <input type="text"
                 value={updatingTag ? updatingTag.name : name}
-                className="border-b border-b-2 focus:outline-none focus:border-blue-200 border-gray-200 bg-gray-100 my-2 w-full"
+                className="border-b border-b-2 focus:outline-none focus:border-blue-200 border-gray-200 my-2 w-full"
                 placeholder="Tag name"
                 onChange={(e) => updatingTag ? setUpdatingTag({ ...updatingTag, name: e.target.value }) : setName(e.target.value)}
             />

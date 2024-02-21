@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useProductContext } from "@/context/ProductContext";
 import { useCategoryContext } from "@/context/CategoryContext";
 import { useTagContext } from "@/context/TagContext";
-// import { useEditionContext } from "@/context/EditionContext";
-// import slugify from "slugify";
 
 const CreateProduct = () => {
 
@@ -20,20 +18,19 @@ const CreateProduct = () => {
     useEffect(() => {
         fetchCategories()
         fetchTags()
-        fetchEditions()
     }, [])
 
     return (
         <div>
             <input type="text" placeholder="Title"
-                className="border-b-2 focus:outline-none focus:border-blue-200 bg-gray-100 my-3 w-full"
+                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
                 value={updatingProduct ? updatingProduct?.title : product?.title}
                 onChange={(e) => {
                     updatingProduct ? setUpdatingProduct({ ...updatingProduct, title: e.target.value }) : setProduct({ ...product, title: e.target.value })
                 }}
             />
             <textarea
-                className="border-2 focus:outline-none focus:border-blue-200 bg-gray-100 my-3"
+                className="border-2 focus:outline-none focus:border-blue-200 my-3"
                 rows={5} cols={90}
                 placeholder="Description"
                 value={updatingProduct ? updatingProduct?.description : product?.description}
@@ -43,13 +40,34 @@ const CreateProduct = () => {
             >
             </textarea>
             <input type="text" placeholder="Brand"
-                value={updatingProduct ? updatingProduct?.developer : product?.developer}
-                className="border-b-2 focus:outline-none focus:border-blue-200 bg-gray-100 my-3 w-full"
+                value={updatingProduct ? updatingProduct?.brand : product?.brand}
+                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
                 onChange={(e) => {
-                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, developer: e.target.value }) : setProduct({ ...product, developer: e.target.value })
+                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, brand: e.target.value }) : setProduct({ ...product, brand: e.target.value })
                 }}
             />
-            <select className="w-full border-b-2 my-3 outline-none focus:border-blue-200 bg-gray-100" name="category"
+            <input type="number" placeholder="Price"
+                value={updatingProduct ? updatingProduct?.price : product?.price}
+                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
+                onChange={(e) => {
+                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, price: e.target.value }) : setProduct({ ...product, price: e.target.value })
+                }}
+            />
+            <input type="number" placeholder="Previous Price"
+                value={updatingProduct ? updatingProduct?.previousPrice : product?.previousPrice}
+                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
+                onChange={(e) => {
+                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, previousPrice: e.target.value }) : setProduct({ ...product, previousPrice: e.target.value })
+                }}
+            />
+               <input type="number" placeholder="Stock"
+                value={updatingProduct ? updatingProduct?.stock : product?.stock}
+                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
+                onChange={(e) => {
+                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, stock: e.target.value }) : setProduct({ ...product, stock: e.target.value })
+                }}
+            />
+            <select className="w-full border-b-2 my-3 outline-none focus:border-blue-200" name="category"
                 onChange={(e) => {
                     const categoryId = e.target.value
                     const categoryName = e.target.options[e.target.selectedIndex].getAttribute("name")
@@ -106,43 +124,6 @@ const CreateProduct = () => {
                         </div>
                     ))}
             </div>
-            {/* <p className="my-3 border-b-2 text-gray-400">Editions available</p>
-            <div className="my-3 w-full flex flex-wrap justify-evenly items-center">
-                {editions?.map((ed) => (
-                    <div key={ed._id}>
-                        <input
-                            type="checkbox"
-                            checked={updatingProduct?.editions?.some((el) => el.console === ed.console)}
-                            value={ed._id}
-                            onChange={(e) => {
-
-                                const editionId = e.target.value
-
-                                const editionConsole = ed.console
-
-                                const editionSlug = slugify(editionConsole)
-
-                                let selectedEditions = updatingProduct ?
-                                    [...(updatingProduct?.editions ?? [])]
-                                    :
-                                    [...(product?.editions ?? [])]
-
-                                if (e.target.checked) {
-                                    selectedEditions.push({ _id: editionId, console: editionConsole, slug: editionSlug, stock: 0 })
-                                } else {
-                                    selectedEditions = selectedEditions.filter((e) => e.console !== editionConsole)
-                                }
-                                if (updatingProduct) {
-                                    setUpdatingProduct({ ...updatingProduct, editions: selectedEditions })
-                                } else {
-                                    setProduct({ ...product, editions: selectedEditions })
-                                }
-                            }}
-                        />
-                        <label>{ed.console}</label>
-                    </div>
-                ))}
-            </div> */}
             <div className="flex justify-center items-center my-3">
                 <label
                     className={`w-full p-2 hover:bg-gray-200 text-blue-400 uppercase cursor-pointer my-2 ${uploading ? "disabled" : ""}`}>
@@ -173,150 +154,6 @@ const CreateProduct = () => {
                     </div>
                 ))}
             </div>
-            {/* {updatingProduct && (
-                updatingProduct.editions?.map((ed) => (
-                    <div className="flex my-3 border-2 border-gray-200 h-[12rem] w-full rounded-md shadow-lg" key={ed._id}>
-                        <div className="flex items-center justify-center border-r-2 w-1/6 h-full my-3 overflow-hidden">
-                            {
-                                !ed.image ?
-                                    <label
-                                        className={`text-blue-400 uppercase cursor-pointer ${uploading ? "disabled" : ""}`}>
-                                        {uploading ? "Processing" : "Upload Image"}
-                                        <input
-                                            type="file"
-                                            hidden
-                                            required
-                                            multiple
-                                            accept="images/*"
-                                            onChange={(e) => uploadEditionImages(e, ed)}
-                                            disabled={uploading}
-                                        />
-                                    </label>
-                                    :
-                                    <img className="w-full h-full object-contain" src={ed?.image?.secure_url} />
-                            }
-                        </div>
-                        <div className="flex items-center justify-center flex-col p-2 w-5/6">
-                            <p className="text-center uppercase font-bold my-2">Update price and stock</p>
-                            <div className="grid grid-cols-3 gap-3">
-
-                                <div className="flex flex-col">
-                                    <label className="text-center">Stock</label>
-                                    <input
-                                        value={ed.stock}
-                                        type="number"
-                                        min={1}
-                                        required
-                                        className="w-1/2 mx-auto  rounded-full outline-none shadow-lg border-2 border-gray-200 p-2"
-                                        onChange={(e) => {
-                                            let allEditions = updatingProduct?.editions
-                                            const edition = ed
-                                            edition.stock = Number(e.target.value)
-                                            allEditions = allEditions.map((ed) => (
-                                                ed._id === edition._id ? edition : ed
-                                            ))
-                                            setUpdatingProduct({ ...updatingProduct, editions: allEditions })
-                                        }}
-                                    />
-                                </div>
-                                <div className="flex flex-col">
-                                    <label className="text-center">Price</label>
-                                    <input
-                                        type="number"
-                                        min={1}
-                                        className="w-1/2 mx-auto rounded-full outline-none shadow-lg border-2 border-gray-200 p-2"
-                                        required
-                                        value={ed.price}
-                                        onChange={(e) => {
-                                            let allEditions = updatingProduct?.editions
-                                            const edition = ed
-                                            edition.price = e.target.value
-                                            allEditions = allEditions.map((ed) => (
-                                                ed._id === edition._id ? edition : ed
-                                            ))
-                                            setUpdatingProduct({ ...updatingProduct, editions: allEditions })
-                                        }}
-                                    />
-                                </div>
-                                <div className="flex flex-col">
-                                    <label className="text-center">Previous Price</label>
-                                    <input
-                                        type="number"
-                                        min={1}
-                                        className="w-1/2 mx-auto rounded-full outline-none shadow-lg border-2 border-gray-200 p-2"
-                                        value={ed.previousPrice}
-                                        onChange={(e) => {
-                                            let allEditions = updatingProduct?.editions
-                                            const edition = ed
-                                            edition.previousPrice = e.target.value
-                                            allEditions = allEditions.map((ed) => (
-                                                ed._id === edition._id ? edition : ed
-                                            ))
-                                            setUpdatingProduct({ ...updatingProduct, editions: allEditions })
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))
-            )}
-            {product?.editions && (
-                product.editions.map((ed) => (
-                    <div className="flex my-3 border-2 border-gray-200 h-[9rem] w-full rounded-md shadow-lg" key={ed._id}>
-                        <div className="grid place-content-center border-r-2 w-1/6 my-3 overflow-hidden">
-                            <label
-                                className={`text-blue-400 uppercase cursor-pointer ${uploading ? "disabled" : ""}`}>
-                                {uploading ? "Processing" : "Upload image"}
-                                {!ed.image && <input
-                                    type="file"
-                                    hidden
-                                    multiple
-                                    accept="images/*"
-                                    onChange={(e) => uploadEditionImages(e, ed)}
-                                    disabled={uploading}
-                                />}
-                                {
-                                    ed.image && <img className="w-full h-full object-center" src={ed.image.secure_url} />
-                                }
-                            </label>
-                        </div>
-                        <div className="flex items-center justify-center p-2 w-5/6">
-                            <strong>{ed.console}</strong>
-                            <input
-                                type="number"
-                                min={1}
-                                className="mx-2 rounded-full outline-none shadow-lg border-2 border-gray-200 p-2"
-                                placeholder="Stock"
-                                onChange={(e) => {
-                                    let allEditions = product?.editions
-                                    const edition = ed
-                                    edition.stock = e.target.value
-                                    allEditions = allEditions.map((ed) => (
-                                        ed._id === edition._id ? edition : ed
-                                    ))
-                                    setProduct({ ...product, editions: allEditions })
-                                }}
-                            />
-                            <input
-                                type="number"
-                                min={1}
-                                className="mx-2 rounded-full outline-none shadow-lg border-2 border-gray-200 p-2"
-                                placeholder="Price"
-                                onChange={(e) => {
-                                    let allEditions = product?.editions
-                                    const edition = ed
-                                    edition.price = e.target.value
-                                    allEditions = allEditions.map((ed) => (
-                                        ed._id === edition._id ? edition : ed
-                                    ))
-                                    setProduct({ ...product, editions: allEditions })
-                                }}
-                            />
-                        </div>
-                    </div>
-                ))
-            )} */}
             <div>
                 <button className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-full m-2"
                     onClick={

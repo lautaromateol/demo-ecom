@@ -17,7 +17,7 @@ export default function OrdersList({ orders, handleStatusChange }) {
             key: 'cartItems',
             render: (cartItems) =>
                 cartItems.map((item) => (
-                    <span>{item.title}</span>
+                    <span>{cartItems.indexOf(item) === cartItems.length - 1 ? item.title : `${item.title}, `}</span>
                 ))
         },
         {
@@ -29,11 +29,6 @@ export default function OrdersList({ orders, handleStatusChange }) {
             )
         },
         {
-            title: 'Delivery Status',
-            key: 'delivery_status',
-            dataIndex: 'delivery_status',
-        },
-        {
             title: 'Refunded',
             dataIndex: 'refunded',
             key: 'refunded',
@@ -42,11 +37,33 @@ export default function OrdersList({ orders, handleStatusChange }) {
             )
         },
         {
+            title: 'Delivery Status',
+            key: 'delivery_status',
+            dataIndex: 'delivery_status',
+            render: (delivery_status, record) => (
+                <select
+                    onChange={(e) =>
+                        handleStatusChange(e.target.value, delivery_status, record._id)
+                    }
+                    value={delivery_status}
+                    disabled={record.refunded}
+                >
+                    <option value="Not Processed">Not Processed</option>
+                    <option value="processing">Processing</option>
+                    <option value="Dispatched">Dispatched</option>
+                    {record.refunded && (
+                        <option value="Cancelled">Cancelled</option>
+                    )}
+                    <option value="Delivered">Delivered</option>
+                </select>
+            )
+        },
+        {
             title: 'Receipt URL',
             dataIndex: 'receipt_url',
             key: 'receipt_url',
             render: (receipt_url) => (
-                <a target="_blank" href={receipt_url} className="text-red-500 uppercase">View Receipt</a>
+                <a target="_blank" href={receipt_url} className="text-red-500 uppercase">View</a>
             )
         },
         {
@@ -57,7 +74,7 @@ export default function OrdersList({ orders, handleStatusChange }) {
         {
             title: 'Payment Intent',
             dataIndex: 'payment_intent',
-            key:'payment_intent'
+            key: 'payment_intent'
         },
         {
             title: 'Payment Date',
@@ -66,7 +83,7 @@ export default function OrdersList({ orders, handleStatusChange }) {
             render: (createdAt) => (
                 <span>{new Date(createdAt).toLocaleDateString()}</span>
             )
-        }
+        },
     ];
 
     return (

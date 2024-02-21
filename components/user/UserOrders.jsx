@@ -28,7 +28,7 @@ export default function UserOrders({ orders }) {
             key: 'cartItems',
             render: (cartItems) =>
                 cartItems.map((item) => (
-                    <span>{item.title}</span>
+                    <span>{cartItems.indexOf(item) === cartItems.length - 1 ? item.title : `${item.title},`}</span>
                 ))
         },
         {
@@ -49,7 +49,7 @@ export default function UserOrders({ orders }) {
                         delivery_status === "Not Processed" && record.refunded === false ? (
                             <>
                                 <span className="block">{delivery_status}</span>
-                                <button className="text-red-500 uppercase" onClick={()=> handleCancelOrder(record._id)}>Cancel the order</button>
+                                <button className="text-red-500 uppercase" onClick={() => handleCancelOrder(record._id)}>Cancel the order</button>
                             </>
                         ) : (
                             <span>{delivery_status}</span>

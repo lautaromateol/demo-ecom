@@ -1,60 +1,57 @@
 "use client";
-import { useState, useEffect } from "react";
 import { FaShoppingCart, FaShoppingBag, FaDollarSign, FaUser } from "react-icons/fa";
 import CardDataStats from "@/components/admin/CartDataStats";
-// import TopProductsTable from "@/components/admin/TopProductsTable";
 
+export default async function AdminDashboardPage(){
 
-const AdminDashboard = async () => {
-
-  const [cardData, setCardData] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  const fetchCardData = async () => {
+  async function fetchCardData() {
+    const apiUrl = `${process.env.API}/admin/chart`;
+    
     try {
-      const response = await fetch(`${process.env.API}/admin/chart`)
-      const data = await response.json()
-      if (response.ok) {
-        setCardData(data)
-        setLoading(false)
-      } else {
-        console.log(data.error)
+      const response = await fetch(apiUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+  
+      const data = await response.json();
+  
+      return {
+        totalUsers: data.totalUsers,
+        totalOrders: data.totalOrders,
+        totalProducts: data.totalProducts,
+        profit: data.profit
+      };
     } catch (error) {
-      console.log(error)
+      console.error('Error fetching data:', error);
+      return {
+        totalUsers: 0,
+        totalOrders: 0,
+        totalProducts: 0,
+        profit: 0
+      };
     }
   }
 
-  useEffect(() => {
-    fetchCardData()
-  }, [])
+  const { totalUsers, totalOrders, totalProducts, profit } = await fetchCardData()
 
   return (
     <>
-      {loading ?
-        <div className="flex h-screen items-center justify-center bg-white dark:bg-black">
-          <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
-        </div> :
-        <>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-            <CardDataStats title="Total Users" total={cardData.totalUsers}>
-              <FaUser />
-            </CardDataStats>
-            <CardDataStats title="Total Orders" total={cardData.totalOrders}>
-              <FaShoppingCart />
-            </CardDataStats>
-            <CardDataStats title="Total Products" total={cardData.totalProducts}>
-              <FaShoppingBag />
-            </CardDataStats>
-            <CardDataStats title="Total Profit" total={cardData.profit} money={true}>
-              <FaDollarSign />
-            </CardDataStats>
-          </div>
-          {/* <TopProductsTable topProducts={cardData.topProducts} /> */}
-        </>
-      }
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <CardDataStats title="Total Users" total={totalUsers}>
+          <FaUser />
+        </CardDataStats>
+        <CardDataStats title="Total Orders" total={totalOrders}>
+          <FaShoppingCart />
+        </CardDataStats>
+        <CardDataStats title="Total Products" total={totalProducts}>
+          <FaShoppingBag />
+        </CardDataStats>
+        <CardDataStats title="Revenue" total={profit} money={true}>
+          <FaDollarSign />
+        </CardDataStats>
+      </div>
+      {/* <TopProductsTable topProducts={cardData.topProducts} /> */}
     </>
   )
 }
-
-export default AdminDashboard;

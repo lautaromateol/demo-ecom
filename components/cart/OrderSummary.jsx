@@ -6,17 +6,9 @@ const OrderSummary = ({handleNextStep}) => {
 
     const calculateTotal = () => {
         return cartItems.reduce(
-            (total, item) => total + item.selectedEdition.price * item.quantity, 0
+            (total, item) => total + item.price * item.quantity, 0
         )
     }
-
-    const totalItems = () => {
-        return cartItems.reduce(
-            (total, item) => total + item.quantity, 0
-        )
-    }
-
-    const itemOrItems = totalItems() > 1 ? "items" : "item"
 
     return (
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">

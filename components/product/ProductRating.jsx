@@ -62,14 +62,12 @@ const ProductRating = ({ product }) => {
                 setShowRatingModal(false)
                 toast.success("Thanks for leaving a rating.")
                 window.location.reload()
-            } else if(response.status === "400"){
+            } else if(response.status === 400){
                 toast.error(data.error)
             } else {
                 toast.error("An error has ocurred leaving the rating. Please try again later.")
-                console.log(data.error)
             }
         } catch (error) {
-            console.log(error)
             toast.error("Server error. Please try again later.")
         }
     }

@@ -22,7 +22,7 @@ const ProductProvider = ({ children }) => {
     const [showRatingModal, setShowRatingModal] = useState(false)
     const [currentRating, setCurrentRating] = useState(0)
     const [comment, setComment] = useState("")
-    const [developers, setDevelopers] = useState([])
+    const [brands, setBrands] = useState([])
     const [productSearchQuery, setProductSearchQuery] = useState("")
     const [productSearchResults, setProductSearchResults] = useState([])
 
@@ -106,58 +106,6 @@ const ProductProvider = ({ children }) => {
         }
     }
 
-    const uploadEditionImages = async (event, edition) => {
-        const file = event.target.files[0]
-
-        const productEdition = edition
-
-        if (file) {
-            setUploading(true)
-            try {
-                await new Promise((resolve, reject) => {
-                    Resizer.imageFileResizer(
-                        file,
-                        1280,
-                        720,
-                        "JPEG",
-                        100,
-                        0,
-                        (uri) => {
-                            fetch(`${process.env.API}/admin/upload/image`, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({ image: uri })
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    productEdition.image = data;
-                                    resolve()
-                                })
-                                .catch((err) => {
-                                    toast.error("CLOUDINARY UPLOAD ERROR", err)
-                                })
-                        },
-                        "base64"
-                    )
-                })
-                const editions = product?.editions.map((edition) => (
-                    edition.console === productEdition.console ? productEdition : edition
-                ))
-
-                setProduct({ ...product, editions })
-
-                setUploading(false)
-
-            } catch (error) {
-                toast.error("Error uploading the image ", error.message)
-                setUploading(false)
-            }
-        }
-    };
-
-
     const deleteImage = (public_id) => {
         setUploading(true)
         fetch(`${process.env.API}/admin/upload/image`, {
@@ -169,8 +117,8 @@ const ProductProvider = ({ children }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                const filteredImages = updatingProduct ? updatingProduct.images.filter((image) => image.public_id !== public_id) : product.images.filter((image) => image !== public_id)
-                updatingProduct ? setUpdatingProduct({ ...updatingProduct, images: filteredImages }) : setProduct({ ...product, images: filteredImages })
+                const filteredImages = updatingProduct ? updatingProduct.main_images.filter((image) => image.public_id !== public_id) : product.main_images.filter((image) => image !== public_id)
+                updatingProduct ? setUpdatingProduct({ ...updatingProduct, main_images: filteredImages }) : setProduct({ ...product, main_images: filteredImages })
             })
             .catch((error) => toast.error("Error deleting the image ", error))
             .finally(() => setUploading(false))
@@ -190,11 +138,13 @@ const ProductProvider = ({ children }) => {
                 setProduct(null)
                 toast.success(`Product "${data.title}" created`)
                 window.location.reload()
-            } else {
+            } else if(response.status === 400) {
                 toast.error(data.error)
+            } else {
+                toast.error(`An error has ocurred creating the product: ${data.error}`)
             }
         } catch (error) {
-            toast.error("An error has ocurred. Try again")
+            toast.error("Server error creating the product. Try again later.")
         }
     }
 
@@ -261,12 +211,12 @@ const ProductProvider = ({ children }) => {
         }
     }
 
-    const fetchDevelopers = async () => {
+    const fetchBrands = async () => {
         try {
-            const response = await fetch(`${process.env.API}/product/developers`)
+            const response = await fetch(`${process.env.API}/product/brands`)
             const data = await response.json()
             if (response.ok) {
-                setDevelopers(data)
+                setBrands(data)
             } else {
                 throw new Error("Failed to fetch developers")
             }
@@ -307,14 +257,13 @@ const ProductProvider = ({ children }) => {
                 uploading,
                 setUploading,
                 uploadImages,
-                uploadEditionImages,
                 deleteImage,
                 createProduct,
                 fetchProducts,
                 updateProduct,
                 deleteProduct,
-                developers,
-                fetchDevelopers,
+                brands,
+                fetchBrands,
                 showImagePreviewModal,
                 setShowImagePreviewModal,
                 currentImagePreviewUrl,

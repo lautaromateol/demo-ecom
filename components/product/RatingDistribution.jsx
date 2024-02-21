@@ -110,7 +110,7 @@ const RatingDistribution = ({ reviews }) => {
 
     return (
       <div key={rating} className="flex items-center mb-2">
-        <div className="w-3/5">
+        <div className="ml-4 w-3/5">
           <div className="h-4 bg-gray-300">
             <div
               className="h-4 bg-yellow-400"

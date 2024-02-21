@@ -8,6 +8,8 @@ export async function PUT(req, {params}){
     const body = await req.json()
 
     try {
+        if(!body.name || !body.images) throw new Error("Missing properties.")
+        
         const updatedCategory = await Category.findByIdAndUpdate(
             params.id,
             { ...body, slug: slugify(body.name) },

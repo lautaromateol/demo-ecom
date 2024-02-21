@@ -5,7 +5,7 @@ export default function UserReviews({ reviews }) {
     return (
         <>
             {reviews?.length ? (
-                <div>
+                <div className="mt-5">
                     <RatingDistribution reviews={reviews} />
                     <ul className="mt-4 p-4">
                         {reviews?.map((review) => (

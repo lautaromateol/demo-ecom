@@ -40,7 +40,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="container">
+        <div className="min-h-screen">
             <div className="max-w-4xl mx-auto mt-10 flex justify-between p-4">
                 <div className="flex items-center">{checkIcon(1)} Review Cart</div>
                 <div className="flex items-center">{checkIcon(2)} Contact Details</div>

@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/utils/dbConnect";
 import Product from "@/models/product";
+import slugify from "slugify";
 
-export async function PUT(req, {params}){
+export async function PUT(req, { params }) {
     await dbConnect()
     const body = await req.json()
+    const { title, price, stock, brand, description, category, tags, main_images } = body
 
     try {
 
-        // if(body.editions.some((item) => !item.stock || !item.price || !item.image)) throw new Error("Your edition is incomplete.")
+        if (!title || !price || !stock || !brand || !description || !category || !tags || !main_images) throw new Error("Missing properties.")
 
         const updatedProduct = await Product.findByIdAndUpdate(
             params.id,
-            { ...body },
+            { ...body, slug: slugify(`${title} - ${brand}`) },
             { new: true }
         )
         return NextResponse.json(updatedProduct, { status: 200 })
@@ -21,7 +23,7 @@ export async function PUT(req, {params}){
     }
 }
 
-export async function DELETE(req, {params}){
+export async function DELETE(req, { params }) {
     await dbConnect()
 
     try {

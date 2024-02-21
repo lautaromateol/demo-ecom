@@ -4,13 +4,16 @@ import Category from "@/models/category";
 import slugify from "slugify";
 
 export async function POST(req) {
-    const {name} = await req.json()
+    const { name, images } = await req.json()
     await dbConnect()
+
+    if(!name || !images) throw new Error("Missing properties.")
 
     try {
         const category = await Category.create({
             name,
-            slug: slugify(name)
+            slug: slugify(name),
+            images
         })
         return NextResponse.json(category, { status: 200 })
     } catch (error) {

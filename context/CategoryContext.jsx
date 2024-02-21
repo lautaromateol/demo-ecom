@@ -1,5 +1,6 @@
 "use client"
 import { createContext, useContext, useState } from "react"
+import Resizer from "react-image-file-resizer"
 import toast from "react-hot-toast"
 
 const CategoryContext = createContext()
@@ -10,11 +11,13 @@ export const useCategoryContext = ()=> {
 
 const CategoryProvider = ({children}) => {
 
-    const [name, setName] = useState("")
+    const [category, setCategory] = useState(null)
 
     const [categories, setCategories] = useState([])
 
     const [updatingCategory, setUpdatingCategory] = useState(null)
+
+    const [uploading, setUploading] = useState(false)
 
     const createCategory = async()=> {
         try {
@@ -23,12 +26,12 @@ const CategoryProvider = ({children}) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name})
+                body: JSON.stringify(category)
             })
             const data = await response.json()
             if(response.ok){
                 toast.success("Category created")
-                setName("")
+                setCategory(null)
                 setCategories([data, ...categories])
             } else {
                 toast.error(data.error)
@@ -78,8 +81,8 @@ const CategoryProvider = ({children}) => {
             })
             const data = await response.json()
             if(response.ok){
-                toast.success(`Category updating`)
-                setName("")
+                toast.success(`Category updated successfully.`)
+                setCategory(null)
                 setCategories(
                     categories.map(category => (
                         category._id === data._id ? data : category
@@ -104,7 +107,7 @@ const CategoryProvider = ({children}) => {
             })
         const data = await response.json()
         if(response.ok){
-            toast.success("Category deleted")
+            toast.success("Category deleted successfully.")
             setCategories(
                 categories.filter(category => (
                     category._id !== data._id
@@ -119,9 +122,84 @@ const CategoryProvider = ({children}) => {
         }
     }
 
+    const uploadImages = (event) => {
+        const files = event.target.files
+        let images = updatingCategory ? updatingCategory.images : category?.images || []
+
+        if (files) {
+            const totalImages = files.length + images.length
+            if (totalImages > 1) {
+                toast.error("You can't upload more than 1 image")
+                return
+            }
+            setUploading(true)
+            const uploadPromises = []
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i]
+                const promise = new Promise((resolve) => {
+                    Resizer.imageFileResizer(
+                        file,
+                        1280,
+                        720,
+                        "JPEG",
+                        100,
+                        0,
+                        (uri) => {
+                            fetch(`${process.env.API}/admin/upload/image`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({ image: uri })
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    images.push(data);
+                                    resolve()
+                                })
+                                .catch((err) => {
+                                    toast.error("CLOUDINARY UPLOAD ERROR", err)
+                                })
+                        },
+                        "base64"
+                    )
+                })
+                uploadPromises.push(promise)
+            }
+            Promise.all(uploadPromises)
+                .then(() => {
+                    updatingCategory ? setUpdatingCategory({ ...updatingCategory, images }) : setCategory({ ...category, images })
+                    setUploading(false)
+                })
+                .catch((error) => {
+                    toast.error("Error uploading images: ", error.message)
+                    setUploading(false)
+                })
+        }
+    }
+
+    const deleteImage = (public_id) => {
+        setUploading(true)
+        fetch(`${process.env.API}/admin/upload/image`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ public_id })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const filteredImages = updatingCategory ? updatingCategory.images.filter((image) => image.public_id !== public_id) : category.images.filter((image) => image.public_id !== public_id)
+                updatingCategory ? setUpdatingCategory({ ...updatingCategory, images: filteredImages }) : setCategory({ ...category, images: filteredImages })
+            })
+            .catch((error) => toast.error("Error deleting the image ", error))
+            .finally(() => setUploading(false))
+    }
+
     return(
         <CategoryContext.Provider value={
-            {name, setName, categories, setCategories, updatingCategory, setUpdatingCategory, createCategory, fetchCategories, fetchCategoriesPublic, updateCategory, deleteCategory}
+            {category, setCategory, categories, setCategories, updatingCategory, setUpdatingCategory, createCategory, fetchCategories, fetchCategoriesPublic, updateCategory, deleteCategory, uploading, uploadImages, deleteImage}
             }>
             {children}
         </CategoryContext.Provider>

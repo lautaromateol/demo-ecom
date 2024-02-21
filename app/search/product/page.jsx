@@ -33,7 +33,7 @@ const SearchResults = () => {
     }, [query])
 
     return (
-        <div className="container">
+        <div className="container min-h-screen">
             <div className="mx-auto max-w-5xl p-4">
                 <h4 className="text-xl font-bold uppercase">Search results: {productSearchResults?.length}</h4>
                 <hr className="w-full my-2" />

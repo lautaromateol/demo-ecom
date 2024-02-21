@@ -14,14 +14,15 @@ export async function POST(req) {
         const lineItems = await Promise.all(
             body.cartItems.map(async(item) => {
                 const product = await Product.findById(item.id)
-                const unitAmount = item.selectedEdition.price * 100
+                // const unitAmount = item.selectedEdition.price * 100
+                const unitAmount = product.price * 100
                 return {
                     price_data: {
                         currency: "usd",
                         product_data: {
                             name: product.title,
                             // images: [item.selectedEdition.image.secure_url]
-                            images: item.main_images[0].secure_url
+                            images: [product.main_images[0].secure_url]
                         },
                         unit_amount: unitAmount
                     },
