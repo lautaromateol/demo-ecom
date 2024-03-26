@@ -1,15 +1,13 @@
-import ProductImage from "@/components/product/ProductImage";
 import ProductRating from "@/components/product/ProductRating";
-import ProductCard from "@/components/product/ProductCard";
+import RelatedProducts from "@/components/product/RelatedProducts";
+import ProductImage from "@/components/product/ProductImage";
 import AddToCart from "@/components/product/AddToCart";
 import UserReviews from "@/components/product/UserReviewsPage";
+import NewComment from "@/components/product/NewComment";
 import Link from "next/link";
-import product from "@/models/product";
 
 export async function generateMetadata({ params }) {
-    const response = await fetch(`${process.env.API}/product/${params.slug}`, {
-        next: { revalidate: 0 }
-    })
+    const response = await fetch(`${process.env.API}/product/${params.slug}`)
     const data = await response.json()
     if (response.ok) {
         return {
@@ -61,12 +59,18 @@ const ProductDetailPage = async ({ params }) => {
                 <div>
                     <span className="inline-block text-sm font-light tracking-wider text-gray-400 uppercase">Pure Decor</span>
                     <h1 className="text-5xl font-medium text-primary mb-2">{product.title}</h1>
-                    <ProductRating product={product}/>
+                    <ProductRating product={product} />
                     <span className="inline-block text-2xl text-primary mb-4">${product.price.toFixed(2)}</span>
-                    <p className="leading-relaxed font-light text-secondary text-lg mb-6">{product.description}</p>
-                    <AddToCart product={product} display={"productPage"}/>
+                    <div
+                        className="leading-relaxed font-light text-secondary text-lg mb-6"
+                        dangerouslySetInnerHTML={{ __html: product.description }}
+                    />                    
+                    <AddToCart product={product} display={"productPage"} />
                 </div>
             </div>
+            <RelatedProducts products={relatedProducts} />
+            <UserReviews product={product} />
+            <NewComment product={product} />
         </section>
     )
 }

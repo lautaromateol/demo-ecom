@@ -7,7 +7,7 @@ async function getCollection(slug) {
   const data = await response.json()
   if(response.ok) {
     return data
-  }
+  } else return { category: null, products: null }
 }
 
 export default async function Collection({slug}) {
@@ -17,9 +17,9 @@ export default async function Collection({slug}) {
   return (
     <section className="py-24 px-0">
       <div className="mx-auto max-w-7xl">
-      <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category.name} collection</p>
+      <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category?.name} collection</p>
         <div className="grid grid-cols-4">
-          {products.map((product) => {
+          {products?.map((product) => {
             return(
               <ProductCard product={product}/>
             )

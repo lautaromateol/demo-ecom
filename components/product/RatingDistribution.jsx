@@ -20,23 +20,23 @@ const RatingDistribution = ({ reviews }) => {
       const starIcons = Array.from(
         { length: parseInt(rating) },
         (_, index) => (
-          <FaStar key={index} className="text-yellow-300 text-2xl mx-1" />
+          <FaStar key={index} className="text-main w-6 h-6 mx-1" />
         )
       );
 
       const emptyStarIcons = Array.from(
         { length: 5 - parseInt(rating) },
         (_, index) => (
-          <FaRegStar key={index} className="text-yellow-300 text-2xl mx-1" />
+          <FaRegStar key={index} className="text-main w-6 h-6 mx-1" />
         )
       );
 
       return (
         <div key={rating} className="flex items-center mb-2">
           <div className="ml-4 w-3/5">
-            <div className="h-4 bg-gray-300">
+            <div className="h-4 bg-shade">
               <div
-                className="h-4 bg-yellow-400"
+                className="h-4 bg-tint"
                 style={{ width: `${percentage}%` }}
               ></div>
             </div>
@@ -46,7 +46,7 @@ const RatingDistribution = ({ reviews }) => {
               {starIcons}
               {emptyStarIcons}
             </div>
-            <p className="text-sm text-gray-500">{percentage}%</p>
+            <p className="text-sm text-primary">{percentage}%</p>
           </div>
         </div>
       );
@@ -61,7 +61,6 @@ const RatingDistribution = ({ reviews }) => {
               <strong>0</strong>
             </p>
             <Stars rating={0} />
-            <p className="text-sm text-gray-500">Product Rating</p>
           </div>
         </div>
         <div className="w-full md:w-3/4 lg:w-3/4">
@@ -97,23 +96,23 @@ const RatingDistribution = ({ reviews }) => {
     const starIcons = Array.from(
       { length: parseInt(rating) },
       (_, index) => (
-        <FaStar key={index} className="text-yellow-300 text-2xl mx-1" />
+        <FaStar key={index} className="text-main w-6 h-6 mx-1" />
       )
     );
 
     const emptyStarIcons = Array.from(
       { length: 5 - parseInt(rating) },
       (_, index) => (
-        <FaRegStar key={index} className="text-yellow-300 text-2xl mx-1" />
+        <FaRegStar key={index} className="text-main w-6 h-6 mx-1" />
       )
     );
 
     return (
       <div key={rating} className="flex items-center mb-2">
         <div className="ml-4 w-3/5">
-          <div className="h-4 bg-gray-300">
+          <div className="h-4 bg-shade">
             <div
-              className="h-4 bg-yellow-400"
+              className="h-4 bg-tint"
               style={{ width: `${percentage}%` }}
             ></div>
           </div>
@@ -123,7 +122,7 @@ const RatingDistribution = ({ reviews }) => {
             {starIcons}
             {emptyStarIcons}
           </div>
-          <p className="text-sm text-gray-500">{percentage}%</p>
+          <p className="text-sm text-primary">{percentage}%</p>
         </div>
       </div>
     );
@@ -133,11 +132,10 @@ const RatingDistribution = ({ reviews }) => {
     <div className="flex flex-col md:flex-row lg:flex-row">
       <div className="w-full md:w-1/4 lg:w-1/4 flex items-center">
         <div className="mx-auto flex flex-col items-center justify-center">
-          <p className="text-5xl font-bold mb-0">
+          <p className="text-5xl font-bold text-tint mb-0">
             <strong>{calculateAverageRating(reviews)?.toFixed(1)}</strong>
           </p>
           <Stars rating={calculateAverageRating(reviews)} />
-          <p className="text-sm text-gray-500">Product Rating</p>
         </div>
       </div>
       <div className="w-full md:w-3/4 lg:w-3/4">
