@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/utils/dbConnect";
 import Product from "@/models/product";
 
-export const revalidate = 0
-
 export async function GET(req, { params }) {
     await dbConnect()
 
@@ -12,7 +10,6 @@ export async function GET(req, { params }) {
             slug: params.slug
         })
             .populate("category", "name")
-            .populate("tags", "name")
             .populate({
                 path: "ratings.postedBy",
                 model: "User",
@@ -22,7 +19,6 @@ export async function GET(req, { params }) {
         const relatedProducts = await Product.find({
             $or: [
                 { category: product.category },
-                { tags: { $in: product.tags } }
             ],
             _id: { $ne: product._id }
         }).limit(3)

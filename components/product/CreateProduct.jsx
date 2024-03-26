@@ -39,13 +39,6 @@ const CreateProduct = () => {
                 }}
             >
             </textarea>
-            <input type="text" placeholder="Brand"
-                value={updatingProduct ? updatingProduct?.brand : product?.brand}
-                className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"
-                onChange={(e) => {
-                    updatingProduct ? setUpdatingProduct({ ...updatingProduct, brand: e.target.value }) : setProduct({ ...product, brand: e.target.value })
-                }}
-            />
             <input type="number" placeholder="Price"
                 value={updatingProduct ? updatingProduct?.price : product?.price}
                 className="border-b-2 focus:outline-none focus:border-blue-200 my-3 w-full"

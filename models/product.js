@@ -54,10 +54,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    brand: {
-        type: String,
-        required: true
-    },
     shipping: {
         type: Boolean,
         default: true

@@ -73,12 +73,12 @@ const ProductRating = ({ product }) => {
     }
 
     return (
-        <div className="flex space-x-2">
-            <div className="flex items-center">
+        <div className="flex space-x-2 mb-4">
+            <div className="flex space-x-2 items-center">
                 <Stars rating={averageRating} />
-                <small className="text-gray-500"> ({productRatings?.length})</small>
+                <small className="text-primary"> ({productRatings?.length})</small>
             </div>
-            <small onClick={() => setShowRatingModal(true)} className="cursor-pointer">
+            {/* <small onClick={() => setShowRatingModal(true)} className="cursor-pointer">
                 {alreadyRated ? "Update your rating" : "Leave a rating"}
             </small>
             {showRatingModal && (
@@ -99,7 +99,7 @@ const ProductRating = ({ product }) => {
                                 <span
                                     key={ratingValue}
                                     className={
-                                        ratingValue <= currentRating ? "text-yellow-300 text-2xl" : "text-gray-300 text-2xl"
+                                        ratingValue <= currentRating ? "text-primary text-2xl" : "text-secondary text-2xl"
                                     }
                                     onClick={() => setCurrentRating(ratingValue)}
                                 >
@@ -119,7 +119,7 @@ const ProductRating = ({ product }) => {
                         Submit
                     </button>
                 </Modal>
-            )}
+            )} */}
         </div>
 
     );

@@ -12,6 +12,7 @@ export async function GET(req) {
       {
         $project: {
           title: 1,
+          description: 1,
           price: 1,
           slug: 1,
           previousPrice: 1,
@@ -26,7 +27,7 @@ export async function GET(req) {
         },
       },
       { $sort: { averageRating: -1 } },
-      { $limit: 10 }, 
+      { $limit: 6 }, 
     ]);
     return NextResponse.json(topRatedProducts)
   } catch (error) {

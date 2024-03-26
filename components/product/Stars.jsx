@@ -5,11 +5,11 @@ export default function Stars({rating}){
 
     for(let i = 1; i <= 5; i++){
         if(i <= rating){
-            stars.push(<FaStar className="text-yellow-300" key={i}/>)
+            stars.push(<FaStar className="text-primary w-6 h-6" key={i}/>)
         } else if(i === Math.ceil(rating) && rating % 1 >= 0.5){
-            stars.push(<FaStarHalfAlt className="text-yellow-300" key={i}/>)
+            stars.push(<FaStarHalfAlt className="text-primary w-6 h-6" key={i}/>)
         } else {
-            stars.push(<FaRegStar className="text-yellow-300" key={i}/>)
+            stars.push(<FaRegStar className="text-primary w-6 h-6" key={i}/>)
         }
     }
 

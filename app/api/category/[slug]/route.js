@@ -8,16 +8,10 @@ export async function GET(req, { params }) {
     await dbConnect()
     const slug = params.slug
     const searchParams = queryString.parseUrl(req.url).query
-    const { page, tag, brand, ratings, minPrice, maxPrice } = searchParams || {}
+    const { page, ratings, minPrice, maxPrice } = searchParams || {}
     const pageSize = 6
     const filter = {}
     
-    if(brand){
-        filter.brand = brand
-    }
-    if(tag){
-        filter.tags = tag
-    }
     if(minPrice && maxPrice){
         filter.price = {
             $gte: minPrice,
@@ -33,7 +27,6 @@ export async function GET(req, { params }) {
         filter.category = category._id
         const allProducts = await Product.find(filter)
         .populate("category", "name")
-        .populate("tags", "name")
         .sort({createdAt: -1})
 
         const calculateAverageRating = (ratings)=> {

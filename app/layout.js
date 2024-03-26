@@ -1,16 +1,21 @@
 "use client";
 import './globals.css';
-import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import { Roboto } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
-import TopNav from '@/components/nav/TopNav';
 import Footer from '@/components/footer/Footer';
 import CategoryProvider from '@/context/CategoryContext';
 import TagProvider from '@/context/TagContext';
 import ProductProvider from '@/context/ProductContext';
 import CartProvider from '@/context/CartContext';
+import TopNav from '@/components/nav/TopNav';
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  weight: ['300','400', '500', '700', '900'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function RootLayout({ children }) {
   return (
@@ -24,8 +29,8 @@ export default function RootLayout({ children }) {
           <TagProvider>
             <ProductProvider>
                 <CartProvider>
-                  <body className={inter.className}>
-                    <TopNav />
+                  <body className={roboto.className}>
+                    <TopNav/>
                     <Toaster />
                     {children}
                     <Footer/>

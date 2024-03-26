@@ -21,21 +21,19 @@ export async function GET(req){
 
 export async function POST(req){
     const body = await req.json()
-    const { title, price, stock, brand, description, category, tags, main_images, previousPrice } = body
+    const { title, price, stock, description, category, tags, main_images, previousPrice } = body
     await dbConnect()
 
     try {
-        if(!title || !price || !stock || !brand || !description || !category || !tags || !main_images) throw new Error("Missing properties.")
+        if(!title || !price || !stock || !description || !category || !main_images) throw new Error("Missing properties.")
         
         const product = await Product.create({
-            title: `${brand} - ${title}`,
-            slug: slugify(`${brand} - ${title}`),
+            title,
+            slug: slugify(title),
             price,
             stock,
-            brand,
             description,
             category,
-            tags,
             previousPrice,
             main_images,
         })

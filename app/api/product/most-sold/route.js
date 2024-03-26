@@ -8,7 +8,7 @@ export async function GET(req) {
     await dbConnect()
 
     try {
-        const mostSold = await Product.find().sort({ sold: -1 }).limit(10)
+        const mostSold = await Product.find().sort({ sold: -1 }).limit(4)
         return NextResponse.json(mostSold)
     } catch (error) {
         return NextResponse.json({
