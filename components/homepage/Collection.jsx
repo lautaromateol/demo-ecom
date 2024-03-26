@@ -18,7 +18,7 @@ export default async function Collection({slug}) {
     <section className="py-24 px-0">
       <div className="mx-auto max-w-7xl">
       <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category?.name} collection</p>
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 gap-2">
           {products?.map((product) => {
             return(
               <ProductCard product={product}/>

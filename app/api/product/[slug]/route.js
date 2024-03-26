@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/utils/dbConnect";
 import Product from "@/models/product";
 
+export const revalidate = 0
+
 export async function GET(req, { params }) {
     await dbConnect()
 
