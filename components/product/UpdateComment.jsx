@@ -6,9 +6,9 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 
-export default function NewComment({product}) {
+export default function UpdateComment({ product }) {
 
-  const { currentRating, setCurrentRating, comment, setComment } = useProductContext()
+  const { currentRating, setCurrentRating, comment, setComment, setUpdateComment } = useProductContext()
 
   const router = useRouter()
   const pathname = usePathname()
@@ -61,41 +61,47 @@ export default function NewComment({product}) {
 
   return (
     <section>
-          <textarea
-            type="text"
-            cols={50}
-            rows={5}
-            className="border outline-none w-full p-2 mb-3"
-            placeholder="Write a review"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          ></textarea>
-          <div className="flex cursor-pointer space-x-1">
-            {[...Array(5)].map((_, index) => {
-              const ratingValue = index + 1;
-              return (
-                <span
-                  key={ratingValue}
-                  className={
-                    ratingValue <= currentRating ? "text-primary text-2xl" : "text-secondary text-2xl"
-                  }
-                  onClick={() => setCurrentRating(ratingValue)}
-                >
-                  {ratingValue <= currentRating ? (
-                    <FaStar />
-                  ) : (
-                    <FaRegStar />
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <button
-            onClick={submitRating}
-            className="bg-blue-500 text-white px-4 py-2 mt-3 rounded-full font-bold"
-          >
-            Submit
-          </button>
+      <textarea
+        type="text"
+        cols={50}
+        rows={5}
+        className="border outline-none w-full p-2 mb-3"
+        placeholder="Write a review"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      ></textarea>
+      <div className="flex cursor-pointer space-x-1">
+        {[...Array(5)].map((_, index) => {
+          const ratingValue = index + 1;
+          return (
+            <span
+              key={ratingValue}
+              className={
+                ratingValue <= currentRating ? "text-primary text-2xl" : "text-secondary text-2xl"
+              }
+              onClick={() => setCurrentRating(ratingValue)}
+            >
+              {ratingValue <= currentRating ? (
+                <FaStar />
+              ) : (
+                <FaRegStar />
+              )}
+            </span>
+          );
+        })}
+      </div>
+      <button
+        onClick={submitRating}
+        className="bg-main text-white px-4 py-2 mt-3 rounded-lg mx-1"
+      >
+        Update
+      </button>
+      <button
+        onClick={() => setUpdateComment(false)}
+        className="bg-red-500 text-white px-4 py-2 mt-3 rounded-lg mx-1"
+      >
+        Cancel
+      </button>
     </section>
   )
 }

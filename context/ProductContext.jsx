@@ -22,6 +22,7 @@ const ProductProvider = ({ children }) => {
     const [showRatingModal, setShowRatingModal] = useState(false)
     const [currentRating, setCurrentRating] = useState(0)
     const [comment, setComment] = useState("")
+    const [updateComment, setUpdateComment] = useState(false)
     const [brands, setBrands] = useState([])
     const [productSearchQuery, setProductSearchQuery] = useState("")
     const [productSearchResults, setProductSearchResults] = useState([])
@@ -277,6 +278,8 @@ const ProductProvider = ({ children }) => {
                 setCurrentRating,
                 comment,
                 setComment,
+                updateComment,
+                setUpdateComment,
                 productSearchQuery,
                 setProductSearchQuery,
                 productSearchResults,

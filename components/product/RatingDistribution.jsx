@@ -54,7 +54,7 @@ const RatingDistribution = ({ reviews }) => {
 
 
     return (
-      <div className="flex flex-col md:flex-row lg:flex-row">
+      <div className="flex flex-col md:flex-row lg:flex-row py-12">
         <div className="w-full md:w-1/4 lg:w-1/4 flex items-center">
           <div className="mx-auto flex flex-col items-center justify-center">
             <p className="text-5xl font-bold mb-0">
@@ -129,7 +129,7 @@ const RatingDistribution = ({ reviews }) => {
   });
 
   return (
-    <div className="flex flex-col md:flex-row lg:flex-row">
+    <div className="flex flex-col md:flex-row lg:flex-row py-12">
       <div className="w-full md:w-1/4 lg:w-1/4 flex items-center">
         <div className="mx-auto flex flex-col items-center justify-center">
           <p className="text-5xl font-bold text-tint mb-0">

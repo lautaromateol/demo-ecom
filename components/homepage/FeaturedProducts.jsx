@@ -16,7 +16,7 @@ export default async function FeaturedProducts() {
   const bestRated = await fetchProducts()
 
   return (
-    <section className="py-24 px-6 md:px-0">
+    <section className="py-12 md:py-24 px-6 md:px-0">
       <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <h3 className="text-lg text-main font-medium uppercase tracking-wider mb-4">Featured products</h3>

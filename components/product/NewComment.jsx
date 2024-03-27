@@ -57,7 +57,7 @@ export default function NewComment({ product }) {
 
   if(!alreadyRated){
     return (
-      <section className="py-12">
+      <section>
         <div className="max-w-7xl mx-auto">
         <textarea
           type="text"
