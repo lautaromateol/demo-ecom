@@ -5,7 +5,9 @@ import Newsletter from '@/components/homepage/Newsletter';
 import Testimonials from '@/components/homepage/Testimonials';
 
 async function getCategories(){
-  const response = await fetch(`${process.env.API}/categories`)
+  const response = await fetch(`${process.env.API}/categories`, {
+    next: { revalidate: 20 }
+  })
   const data = await response.json()
   if(response.ok) return data
   else return []
@@ -22,7 +24,7 @@ const HomePage = async() => {
      <Testimonials/>
      {categories.map(({slug}) => {
       return (
-        <Collection slug={slug}/>
+        <Collection key={slug} slug={slug}/>
       )
      })}
      <Newsletter/>

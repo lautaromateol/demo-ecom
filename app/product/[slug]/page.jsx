@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 
 async function getProducts(slug) {
     const response = await fetch(`${process.env.API}/product/${slug}`, {
-        next: { revalidate: 0 }
+        next: { revalidate: 3600 }
     })
     const data = await response.json()
     if (response.ok) {
@@ -53,9 +53,9 @@ const ProductDetailPage = async ({ params }) => {
     }
 
     return (
-        <section className="py-12">
-            <div className="max-w-7xl mx-auto grid grid-cols-2 gap-8">
-                <img className="w-3/4 justify-self-center" src={product.main_images[0]?.secure_url} alt="Product Image" />
+        <section className="py-12 px-6 md:px-0">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <img className="w-full md:w-3/4 justify-self-center rounded-lg" src={product.main_images[0]?.secure_url} alt="Product Image" />
                 <div>
                     <span className="inline-block text-sm font-light tracking-wider text-gray-400 uppercase">Pure Decor</span>
                     <h1 className="text-5xl font-medium text-primary mb-2">{product.title}</h1>

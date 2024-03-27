@@ -16,9 +16,9 @@ export async function POST(req){
             userId: user._id,
             "cartItems._id": productId
         })
-        // if(!userPurchased) {
-        //     return NextResponse.json({ error: "You can only leave reviews to products you have purchased."}, { status: 400 })
-        // }
+        if(!userPurchased) {
+            return NextResponse.json({ error: "You can only leave reviews to products you have purchased."}, { status: 400 })
+        }
         if(existingRating){
             existingRating.rating = rating
             existingRating.comment = comment

@@ -43,7 +43,7 @@ const AddToCart = ({ product, display }) => {
             {display === "productPage" ?
                 <>
                     <label className="block uppercase text-primary mb-2" htmlFor="quantity">Quantity</label>
-                    <input min={1} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} value={quantity} className="px-4 py-2 border border-secondary focus:outline-none mb-6" type="number" id="quantity" />
+                    <input min={1} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} value={quantity} className="w-full md:w-1/2 px-4 py-2 border border-secondary focus:outline-none mb-6" type="number" id="quantity" />
                     <button onClick={handleAddToCart} className="w-full bg-main px-4 py-2 text-white transition-all hover:bg-tint">Add to cart</button>
                 </>
                 :

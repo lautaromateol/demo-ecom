@@ -1,8 +1,8 @@
 export default function Testimonials() {
   return (
-    <section className="py-24 px-0 bg-shade">
-      <div className="mx-auto max-w-7xl grid grid-cols-2 gap-8">
-        <div className="grid grid-cols-2 gap-8 py-8">
+    <section className="py-12 md:py-24 px-6 md:px-0 bg-shade">
+      <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 py-8">
           <div>
             <img src="./img/customers/ben.jpg" className="w-12 h-12 rounded-full mb-2" alt="Ben" />
             <p className="text-secondary leading-relaxed mb-4">"Shopping at NAME was a game-changer for me! Their curated collection of minimalist furniture helped me transform my home into a sanctuary of modern simplicity."</p>

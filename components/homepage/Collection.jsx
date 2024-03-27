@@ -2,7 +2,7 @@ import ProductCard from "../product/ProductCard"
 
 async function getCollection(slug) {
   const response = await fetch(`${process.env.API}/category/${slug}`, {
-    next: { revalidate: 0 }
+    next: { revalidate: 20 }
   })
   const data = await response.json()
   if(response.ok) {
@@ -15,13 +15,13 @@ export default async function Collection({slug}) {
   const { category, products } = await getCollection(slug)
 
   return (
-    <section className="py-24 px-0">
+    <section className="py-24 px-6 md:px-0">
       <div className="mx-auto max-w-7xl">
       <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category?.name} collection</p>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {products?.map((product) => {
             return(
-              <ProductCard product={product}/>
+              <ProductCard key={product?._id} product={product}/>
             )
           })}
         </div>
