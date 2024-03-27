@@ -10,7 +10,7 @@ const Step1 = ({ handleNextStep }) => {
   return (
     <div className="container">
       <div className="mx-auto max-w-7xl p-4">
-      <p className="bg-indigo-100 text-blue-600 w-full px-4 py-2">Review Cart Items</p>
+      <p className="bg-shade text-main w-full px-4 py-2">Review Cart Items</p>
         <div className="w-full mt-10">
           <div className="justify-center px-6 md:flex md:space-x-6 xl:px-0">
             {cartItems.map((item) => (
@@ -24,7 +24,7 @@ const Step1 = ({ handleNextStep }) => {
                       {/* <p className="mt-1 text-xs text-gray-700">{item.selectedEdition.console} edition</p> */}
                     </div>
                     <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                      <AddToCart product={item} reviewAndCheckout={false} />
+                      <AddToCart product={item} display="cartPage" />
                       <div className="flex items-center space-x-4">
                         {/* <p className="text-lg">${item.selectedEdition.price.toFixed(2)}</p> */}
                         <p className="text-lg">${item.price.toFixed(2)}</p>

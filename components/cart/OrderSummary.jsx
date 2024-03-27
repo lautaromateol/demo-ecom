@@ -31,7 +31,7 @@ const OrderSummary = ({handleNextStep}) => {
                     <p className="mb-1 text-lg font-bold">${(calculateTotal() + (calculateTotal() * (0,10) / 100) + 5).toFixed(2)}</p>
                 </div>
             </div>
-            <button onClick={handleNextStep} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+            <button onClick={handleNextStep} className="mt-6 w-full rounded-lg bg-main py-1.5 font-medium text-white hover:bg-tint">Check out</button>
         </div>
     )
 }

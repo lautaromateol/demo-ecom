@@ -9,6 +9,7 @@ export default function CartProvider({ children }) {
     const [couponCode, setCouponCode] = useState("");
     const [percentOff, setPercentOff] = useState(0);
     const [validCoupon, setValidCoupon] = useState(false);
+    const [openSlider, setOpenSlider] = useState(false)
 
     // Load cart items from local storage on component mount
     useEffect(() => {
@@ -108,6 +109,8 @@ export default function CartProvider({ children }) {
                 percentOff,
                 validCoupon,
                 clearCart,
+                openSlider,
+                setOpenSlider
             }}
         >
             {children}

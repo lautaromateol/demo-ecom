@@ -9,6 +9,7 @@ import TagProvider from '@/context/TagContext';
 import ProductProvider from '@/context/ProductContext';
 import CartProvider from '@/context/CartContext';
 import TopNav from '@/components/nav/TopNav';
+import SlideOverCart from '@/components/cart/SlideOverCart';
 
 const roboto = Roboto({
   weight: ['300','400', '500', '700', '900'],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
                   <body className={roboto.className}>
                     <TopNav/>
                     <Toaster />
+                    <SlideOverCart/>
                     {children}
                     <Footer/>
                   </body>

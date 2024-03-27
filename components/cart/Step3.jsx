@@ -51,15 +51,15 @@ const Step3 = ({ handlePrevStep }) => {
     <div className="container flex items-center justify-center px-4 mt-10">
       <div className="max-w-7xl flex space-x-4">
         <div className="w-full">
-          <p className="bg-indigo-100 text-blue-600 w-full px-4 py-2">Payment Method</p>
+          <p className="bg-shade text-main w-full px-4 py-2">Payment Method</p>
           <p className="px-4 py-2 bg-gray-400 mt-4 text-white">
             Clicking 'Place Order' will securely redirect you to our trusted payment partner, Stripe to complete your checkout. Your payment information is fully protected and encrypted for your security.
           </p>
           <div className="flex mt-4">
-            <button onClick={handlePrevStep} className="w-1/2 px-4 py-2 border-2 border-green-700 text-green-700">
+            <button onClick={handlePrevStep} className="w-1/2 px-4 py-2 border-2 border-main text-main">
               Previous
             </button>
-            <button disabled={loading} onClick={handleClick} className="w-1/2 px-4 py-2 bg-blue-500 border-2 border-blue-500 text-white text-center" href={`/login?callbackUrl=${window.location.href}`}>
+            <button disabled={loading} onClick={handleClick} className="w-1/2 px-4 py-2 bg-main border-2 border-main text-white text-center" href={`/login?callbackUrl=${window.location.href}`}>
               {loading ? "Processing" : "Place Order"}
             </button>
           </div>

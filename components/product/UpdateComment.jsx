@@ -15,7 +15,7 @@ export default function UpdateComment({ product }) {
 
   const { data, status } = useSession()
 
-  const [productRatings, setProductRatings] = useState(product?.ratings || [])
+  const [productRatings, setProductRatings] = useState(product?.ratings)
 
   const alreadyRated = productRatings?.find((rate) => rate?.postedBy?._id === data?.user?._id)
 
@@ -37,8 +37,10 @@ export default function UpdateComment({ product }) {
       const data = await response.json()
       if (response.ok) {
         setProductRatings(data?.ratings)
-        toast.success("Thanks for leaving a rating.")
-        window.location.reload()
+        toast.success("Rating updated.")
+        setTimeout(() => {
+          window.location.reload()
+        }, "1000")
       } else if (response.status === 400) {
         toast.error(data.error)
       } else {
@@ -50,13 +52,8 @@ export default function UpdateComment({ product }) {
   }
 
   useEffect(() => {
-    if (alreadyRated) {
       setCurrentRating(alreadyRated?.rating)
       setComment(alreadyRated?.comment)
-    } else {
-      setCurrentRating(0)
-      setComment("")
-    }
   }, [alreadyRated])
 
   return (
