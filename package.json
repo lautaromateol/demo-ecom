@@ -11,11 +11,9 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "antd": "^5.14.0",
-    "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.2",
     "date-fns": "^3.3.1",
-    "googleapis": "^133.0.0",
     "mongoose": "^8.0.3",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
