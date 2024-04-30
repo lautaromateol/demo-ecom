@@ -15,10 +15,10 @@ const Step2 = ({ handlePrevStep, handleNextStep }) => {
       <div className="container mt-10">
         <div className="max-w-3xl mx-auto p-4">
           <div className="flex">
-            <button onClick={handlePrevStep} className="w-1/2 px-4 py-2 bg-main text-white">
+            <button onClick={handlePrevStep} className="w-1/2 px-4 py-2 border-2 border-main text-main">
               Previous
             </button>
-            <Link className="w-1/2 px-4 py-2 bg-blue-500 text-white text-center" 
+            <Link className="w-1/2 px-4 py-2 bg-main text-white text-center" 
                 href={`/login?callbackUrl=${window.location.href}`}
                 >
               Login to Continue

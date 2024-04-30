@@ -54,7 +54,7 @@ export default function TopNav() {
       </nav>
 
       {/* MOBILE MENU */}
-      <nav className={`${displayMenu ? "opacity-100" : "opacity-0"} md:hidden flex justify-center absolute top-0 left-0 w-full min-h-screen bg-white transition-all 0.5s`}>
+      <nav className={`${displayMenu ? "opacity-100 flex" : "opacity-0 hidden"} md:hidden justify-center absolute top-0 left-0 w-full min-h-screen bg-white transition-all 0.5s`}>
         <ul className="flex flex-col items-center justify-center gap-8 uppercase text-xl text-main font-light">
           {
             status === "authenticated" ?
@@ -90,11 +90,11 @@ export default function TopNav() {
         </ul>
       </nav>
       <button className="md:hidden z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setDisplayMenu(true)} className={`${displayMenu ? "hidden" : "block"} w-6 h-6 text-main`}>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" onClick={() => setDisplayMenu(true)} className={`${displayMenu ? "hidden" : "block"} w-6 h-6 text-main`}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setDisplayMenu(false)} className={`${displayMenu ? "block" : "hidden"} w-6 h-6 text-main`}>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" onClick={() => setDisplayMenu(false)} className={`${displayMenu ? "block" : "hidden"} w-6 h-6 text-main`}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
 
       </button>

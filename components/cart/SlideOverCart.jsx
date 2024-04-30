@@ -106,6 +106,7 @@ export default function SlideOverCart() {
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
                         <Link
+                          onClick={() => setOpenSlider(false)}
                           href="/cart"
                           className="flex items-center justify-center rounded-md border border-transparent bg-main px-6 py-3 text-base text-white shadow-sm hover:bg-tint"
                         >
