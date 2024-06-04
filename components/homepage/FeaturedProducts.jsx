@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Link from "next/link";
 import ProductCard from "../product/ProductCard";
@@ -22,18 +21,7 @@ const settings = {
   slidesToScroll: 1
 };
 
-export default function FeaturedProducts() {
-  const [bestRated, setBestRated] = useState([]);
-
-  useEffect(() => {
-    try {
-      fetch(`${process.env.API}/product/best-rated`)
-        .then((response) => response.json())
-        .then((data) => setBestRated(data));
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+function FeaturedProducts({ bestRated }) {
 
   return (
     <section className="py-12 md:py-24 px-6 lg:px-0">
@@ -65,7 +53,7 @@ export default function FeaturedProducts() {
           <Slider {...settings}>
             {bestRated.map((product) => (
               <div className="px-4">
-                <ProductCard product={product} />
+                <ProductCard key={product._id} product={product} />
               </div>
             ))}
           </Slider>
@@ -74,3 +62,5 @@ export default function FeaturedProducts() {
     </section>
   );
 }
+
+export default FeaturedProducts

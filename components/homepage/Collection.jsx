@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import ProductCard from "../product/ProductCard";
 import "slick-carousel/slick/slick.css";
@@ -29,25 +28,14 @@ const settings = {
   slidesToScroll: 1
 };
 
-export default function Collection({ slug }) {
+export default function Collection({category}) {
 
-  const [category, setCategory] = useState(null)
-
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    fetch(`${process.env.API}/category/${slug}`)
-      .then((response) => response.json())
-      .then(({ products, category }) => {
-        setProducts(products)
-        setCategory(category)
-      })
-  }, [])
+  const products = category?.products
 
   return (
     <section className="py-24 px-6 lg:px-0">
       <div className="mx-auto max-w-7xl">
-        <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category?.name} collection</p>
+        <p className="text-lg text-main font-medium uppercase tracking-wider mb-8">{category?.category?.name} collection</p>
         <div className="md:hidden">
           <Slider {...mobileSettings}>
             {products.map((product) => (
@@ -59,7 +47,7 @@ export default function Collection({ slug }) {
           <Slider {...tabletSettings}>
             {products.map((product) => (
               <div className="px-4">
-                <ProductCard product={product} />
+                <ProductCard key={product._id} product={product} />
               </div>
             ))}
           </Slider>
@@ -68,7 +56,7 @@ export default function Collection({ slug }) {
           <Slider {...settings}>
             {products.map((product) => (
               <div className="px-4">
-                <ProductCard product={product} />
+                <ProductCard key={product._id} product={product} />
               </div>
             ))}
           </Slider>
