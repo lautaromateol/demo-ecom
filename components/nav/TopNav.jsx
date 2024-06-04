@@ -54,7 +54,7 @@ export default function TopNav() {
       </nav>
 
       {/* MOBILE MENU */}
-      <nav className={`${displayMenu ? "opacity-100 flex" : "opacity-0 hidden"} md:hidden justify-center absolute top-0 left-0 w-full min-h-screen bg-white transition-all 0.5s`}>
+      <nav className={`${displayMenu ? "opacity-100 flex" : "opacity-0 hidden"} md:hidden justify-center absolute top-0 left-0 w-full min-h-screen bg-white transition-all`}>
         <ul className="flex flex-col items-center justify-center gap-8 uppercase text-xl text-main font-light">
           {
             status === "authenticated" ?

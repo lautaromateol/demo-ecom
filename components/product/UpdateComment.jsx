@@ -38,9 +38,7 @@ export default function UpdateComment({ product }) {
       if (response.ok) {
         setProductRatings(data?.ratings)
         toast.success("Rating updated.")
-        setTimeout(() => {
-          window.location.reload()
-        }, "1000")
+        window.location.reload()
       } else if (response.status === 400) {
         toast.error(data.error)
       } else {
