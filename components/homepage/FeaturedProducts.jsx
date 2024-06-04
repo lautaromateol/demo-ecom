@@ -37,7 +37,7 @@ function FeaturedProducts({ bestRated }) {
           </p>
           <Link
             className="text-main text-sm font-medium uppercase transition-all hover:border-b border-tint hover:text-tint"
-            href="#"
+            href="/shop"
           >
             View all
           </Link>
