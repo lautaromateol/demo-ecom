@@ -1,27 +1,18 @@
-"use client";
-import Slider from "react-slick";
 import Link from "next/link";
-import ProductCard from "../product/ProductCard";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import FeaturedProductsCarrousel from "./FeaturedProductsCarrousel";
 
-const mobileSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
+async function getFeaturedProducts() {
+  const response = await fetch(`${process.env.API}/product/best-rated`, {
+    next: { revalidate: 0 }
+  })
+  const data = await response.json()
+  if (response.ok) return data
+  else return []
+}
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1
-};
+async function FeaturedProducts() {
 
-function FeaturedProducts({ bestRated }) {
+  const bestRated = await getFeaturedProducts()
 
   return (
     <section className="py-12 md:py-24 px-6 lg:px-0">
@@ -42,22 +33,7 @@ function FeaturedProducts({ bestRated }) {
             View all
           </Link>
         </div>
-        <div className="lg:hidden">
-          <Slider {...mobileSettings}>
-            {bestRated.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </Slider>
-        </div>
-        <div className="hidden lg:block col-span-3">
-          <Slider {...settings}>
-            {bestRated.map((product) => (
-              <div className="px-4">
-                <ProductCard key={product._id} product={product} />
-              </div>
-            ))}
-          </Slider>
-        </div>
+       <FeaturedProductsCarrousel bestRated={bestRated} />
       </div>
     </section>
   );
