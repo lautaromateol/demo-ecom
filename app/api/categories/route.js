@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/utils/dbConnect";
 import Category from "@/models/category";
 
-export const revalidate = 0; 
+export const revalidate = 3600; 
 
 export async function GET(req){
     await dbConnect()
