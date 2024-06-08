@@ -14,15 +14,13 @@ export async function generateMetadata({ params }) {
             title: data.product.title,
             description: data.product.description
         }
-    } else {
-        return null
     }
 }
 
 async function getProducts(slug) {
     const response = await fetch(`${process.env.API}/product/${slug}`, {
-        next: { revalidate: 1 }
-    })
+        next: { revalidate: 0 }
+     })
     const data = await response.json()
     if (response.ok) {
         return {
@@ -30,14 +28,12 @@ async function getProducts(slug) {
             relatedProducts: data.relatedProducts
         }
     }
-    return {
-        product: null
-    }
 }
 
 const ProductDetailPage = async ({ params }) => {
 
-    const { product, relatedProducts } = await getProducts(params.slug)
+    const data = await getProducts(params.slug)
+    const { product, relatedProducts } = data
 
     if (!product) {
         return (
@@ -64,7 +60,7 @@ const ProductDetailPage = async ({ params }) => {
                     <div
                         className="leading-relaxed font-light text-secondary text-lg mb-6"
                         dangerouslySetInnerHTML={{ __html: product.description }}
-                    />                    
+                    />
                     <AddToCart product={product} display={"productPage"} />
                 </div>
             </div>
