@@ -47,7 +47,7 @@ export default async function Shop({ searchParams }) {
                 </div>
                 <div className="w-full lg:w-3/4 p-4">
                     <h1 className="text-4xl font-bold text-center uppercase">All products</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 mt-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
                         {products?.map((product) => (
                             <ProductCard key={product._id} product={product} />
                         ))}
