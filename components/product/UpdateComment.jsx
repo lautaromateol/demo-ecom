@@ -12,7 +12,7 @@ export default function UpdateComment({ product }) {
 
   const router = useRouter()
   const pathname = usePathname()
-
+  
   const { data, status } = useSession()
 
   const [productRatings, setProductRatings] = useState(product?.ratings)

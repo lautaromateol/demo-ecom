@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -13,10 +14,13 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-        <img
-          src='./img/hero.jpg'
-          className="rounded-lg"
-        />
+        <div className="w-full aspect-square relative">
+          <Image
+            fill
+            src='/img/hero.jpg'
+            className="object-cover rounded-lg"
+          />
+        </div>
       </div>
     </section>
   )

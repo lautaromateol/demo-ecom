@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCartContext } from "@/context/CartContext";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function TopNav() {
 
@@ -15,7 +16,7 @@ export default function TopNav() {
   return (
     <header className="relative w-full top-0 left-0 flex items-center justify-between py-0 px-8 h-24 mb-8">
       <Link href="/">
-        <img src="./img/logo.png" alt="logo" className="w-28" />
+        <Image src="/img/logo.png" alt="logo" width={112} height={120} />
       </Link>
       <nav>
         <ul className="hidden md:flex items-center justify-center gap-6 uppercase text-main font-light">
